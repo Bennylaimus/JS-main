@@ -30,6 +30,15 @@ let price = 2.00;
 let total = `You bought ${quantity} ${product}. Total is ${quantity * price}`; // ==>
 // ==> 'You bought 5 apple. Total is 10.00';
 
+//**null**//
+// - Intentional (преднамеренный) absence of ny value (we can set something to null, like let userName = null)
+// - Must be assigned
+
+//**undefined**/
+// - Variables that do not have an assigned value are undefined, like let x; (x is variable, but it is undefined)
+
+
+
 
 
 
