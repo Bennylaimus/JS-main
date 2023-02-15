@@ -69,6 +69,12 @@ if (rating === 3) { // <=== true of false condition
     console.log('Sorry, you lose!')
 }
 
+//** if statement shortened version!**//
+
+let accessAllowed = (age >= 18) ? true : false;
+// - if (age >= 18) is true? ==> run true;
+// - else (:) ==> run false;
+
 //**Nested conditions **//
 let password = prompt('Enter a password');
 
@@ -144,9 +150,35 @@ if (age >= 0 && age <= 5 || age >= 65) {
 if (!(age >= 0 && age <= 5 || age >= 65)) {
     console.log('You are not a baby of a senior!')
 } // <=== the (age >= 0 && age <= 5 || age >= 65) part runs first and an output will the TRUE
-  // <=== then ! will turn it around and get it FALSE, so (NOT THIS (age >= 0 && age <= 5 || age >= 65))
+// <=== then ! will turn it around and get it FALSE, so (NOT THIS (age >= 0 && age <= 5 || age >= 65))
 
-//** Switch **//
+//** Switch statement**//
+
+const day = 5;
+
+switch (day) {
+    case 1:
+        console.log('Monday');
+        break;
+    case 2:
+        console.log('Tuesday');
+        break;
+    case 3:
+        console.log('Wednesday');
+        break;
+    case 4:
+        console.log('Thursday');
+        break;
+    case 5:
+        console.log('Friday');
+        break;
+    case 6:
+    case 7:
+        console.log('Weekend!');
+        break;
+    default:
+        console.log('The wrong number!');
+}
 
 
 
