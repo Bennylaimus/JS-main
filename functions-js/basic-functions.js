@@ -66,7 +66,43 @@ function addingNums(num1, num2) {
 console.log(addingNums(5, 5)); // Output 10;
 console.log(addingNums(5, 'hi')); // Output false; (as one RETURN worked (false returned)) function stops running and RETURN 10 will never runs
 
-let num = [1, 2, 3];
+//** Capitalize string first letter **// - my code
+function capitalize(str) {
+    let strToArr = str.split(''); // ['y', 'u', 'r', 'a'];
+    let arrFirstLetter = strToArr.splice(0, 1); // ['y'] // srtToArr => ['u', 'r', 'a'];
+    let arrFirstLetterCap = arrFirstLetter[0].toUpperCase(); // 'Y' (string) // strToArr => ['u', 'r', 'a'];
+    strToArr.unshift(arrFirstLetterCap); // strToArr => ['Y', 'u', 'r', 'a'];
+    return strToArr.join('');
+}
+
+console.log(capitalize('yura'));
+console.log(capitalize('andrew'));
+
+function sumArray(arr) {
+    let total = 0;
+    for (let i = 0; i < arr.length; i++) {
+        total += arr[i];
+    }
+    return total;
+}
+
+console.log(sumArray([50, 50, 1])); // 101
+
+let weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+function dayOfTheWeek(number) {
+    if (number <= 0 || number >= 8) {
+        return null
+    }
+    return weekDays[number - 1];
+}
+
+console.log(dayOfTheWeek(7));
+
+
+
+
+
 
 
 

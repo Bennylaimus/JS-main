@@ -60,7 +60,7 @@
 // count.reverse(); // output ['three', 'two', 'one'];
 // // count variable is now changed and is ['three', 'two', 'one'];
 
-// //slice() <=== getting a portinm a slice of an array
+// //slice() <=== getting a portion a slice of an array
 // const rainbow = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
 
 // let colorful = rainbow.slice(); // returns the same array, a COPY of an array raibow
