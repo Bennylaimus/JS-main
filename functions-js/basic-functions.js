@@ -118,6 +118,72 @@ function returnDay(day) {
 
 console.log(returnDay(7));
 
+//** SCOPE **//
+//Variable 'visibility', where actually we have an access to taht varianble!
+
+//*Function scope*//
+
+let bird = 'Scarlet Macaw';
+
+function birdWatch() {
+    let bird = 'Blue Royal Haron';
+    console.log(bird) // ===> 'Blue Royal Haron' (but if we remove bird variable (Blue Roya Haron) from the function it will find and 'take' bird variable from outside the function ('Scarlet Macw'));
+};
+birdWatch();
+console.log(bird); // ===> 'Scarlet Macaw';
+
+
+//*Block skope*//
+
+let radius = 8;
+if (radius > 0) {
+    const PI = 3.146612;
+    let message = 'Hello';
+}
+console.log(radius) // ===> 8;
+// console.log(PI) // ===> Error, variable NOT defined (it's in an if BLOCK!)
+// console.log(message) // ===> Error, varianble NO defined (it's in an if BLOCK!)
+
+
+for (let i = 0; i < 3; i++) {
+    let message = 'Hello world!'
+}
+
+// console.log(message); // Error, varianble NOT defined (it's in an for BLOCK!)
+
+//!!IMPORTANT!!//
+// An old var variable don't have a block scope (but it has a function scope)
+
+//*Lexical scope*//
+
+function bankRobbery() {
+    const heroes = ['Batman', 'Spiderman', 'Superman', 'Catwoman'];
+    function cryForHelp() {
+        for (let hero of heroes) {
+            console.log(`Please help us ${hero.toUpperCase()}`);
+        }
+    }
+    cryForHelp(); // 1. We need to RUN this function first!
+}
+
+bankRobbery(); // 2. Only after running cryForHelp() function we will be able to run bankRobbery() function.
+
+// 1. bankRobbery() function starts running, nothing happens, until it goes till the end and fing cryForHelp() function
+// 2. ctyForHelp() function starts running, it has access to heroes and everythin is executed
+
+//** FUNCTION EXPRESSION **//
+
+const add = function (x, y) { // ===> this type of function declaration called FUNCTION EXPRESSION! Function is stored in a variable!
+    return x + y;
+};
+
+add(3, 4); // ===> 7 (to call a function we use variable it's stored in)
+
+
+
+
+
+
 
 
 
