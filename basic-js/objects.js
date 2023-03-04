@@ -68,8 +68,9 @@ const comments = [
     { userName: 'FishBoi', comment: 'glub glub', votes: 126651 }
 ];
 
-console.log(comments[1].comment);
 console.log(comments[0]['votes']);
+console.log(comments[1].comment);
+
 
 
 

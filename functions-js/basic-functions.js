@@ -99,6 +99,26 @@ function dayOfTheWeek(number) {
 
 console.log(dayOfTheWeek(7));
 
+let dayOfWeeks = {
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Saturday',
+    7: 'Sunday'
+};
+
+function returnDay(day) {
+    if (day <= 0 || day >= 8) {
+        return null;
+    }
+    return dayOfWeeks[day];
+};
+
+console.log(returnDay(7));
+
+
 
 
 
