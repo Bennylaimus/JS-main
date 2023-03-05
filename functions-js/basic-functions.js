@@ -173,11 +173,98 @@ bankRobbery(); // 2. Only after running cryForHelp() function we will be able to
 
 //** FUNCTION EXPRESSION **//
 
-const add = function (x, y) { // ===> this type of function declaration called FUNCTION EXPRESSION! Function is stored in a variable!
+const summarize = function (x, y) { // ===> this type of function declaration called FUNCTION EXPRESSION! Function is stored in a variable!
     return x + y;
 };
 
-add(3, 4); // ===> 7 (to call a function we use variable it's stored in)
+summarize(3, 4); // ===> 7 (to call a function we use variable it's stored in)
+
+//** HIGHER ORDER FUNCTIONS **//
+
+//This is functions, that operate on/with other functions.
+// 1) Accept other function as an argument
+// 2) Return a function
+
+//*Acepting function as an argument*//
+
+function callTwice(func) {
+    func();
+    func();
+}
+
+function rollDie() {
+    const roll = Math.floor(Math.random() * 6) + 1
+    console.log(roll);
+}
+
+callTwice(rollDie) // Now, we are passing a rollDie function as an ARGUMENT to callTwice (rollDie now is func)
+
+// callTwice(rollDie()) // DON'T do this, as this will first EXECUTE rollDie() and return 5 and then 5 will be passed as a parametr to cakllTwice(), so it will end up with callTwice(5)!
+
+function callTenTimes(f) {
+    for (let i = 0; i < 10; i++) {
+        f();
+    }
+}
+
+callTenTimes(rollDie);
+
+//*Returning a function*//
+
+function makeMisteryFunc() {
+    const randomNum = Math.random();
+    if (randomNum > 0.5) {
+        return function () {
+            console.log('Sorry, this is a lose finction, ahaha!');
+        }
+    } else {
+        return function () {
+            console.log('Yey! You won! tHis is a very good function!');
+        }
+    }
+}
+
+const mystery = makeMisteryFunc(); // now a variable mustery HOLD INSIDE what makeMisteryFunc function RETURNS (and it returns function() with good result or function() with bad results)
+
+mystery(); // now this will run only function() - thst is what makeMisteryFunc() returns
+
+
+// // 1 step - simple function, that is checking is passed number is between for example 50 and 100:
+
+// function isBetween(number) {
+//     return number >= 50 && number <= 100 // if number is between 50 to 100 it will return true!
+// };
+
+// 1 step - create a factory function:
+
+function makeBetweenFunc(min, max) {
+    return function (num) {
+        return num >= min && num <= max
+    }
+}
+
+makeBetweenFunc(100, 200); // we are calling a functions with 100 and 200 parametrs
+
+// 2 step makeBetweenFunc(min, max) after calling is going to return ===>
+
+//function (num) {
+    //return num >= 100 && num <= 200
+//}
+
+// step 3 - but to RUN function (num) we nned to save it in a variable!
+
+// step 4 - so we are goind this:
+// const isBetween = makeBetweenFunc(min, max) - we are saving the RETURN of the makeBetweenFunc(min, max) (which is function (num)....) to varianble isBetween!
+
+// step 5 - isBetween(10) - function(num) will now looks like this (function(10)) amd it WILL USE (min and max from the previous, higher function)
+
+
+
+
+
+
+
+
 
 
 
