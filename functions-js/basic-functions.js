@@ -248,7 +248,7 @@ makeBetweenFunc(100, 200); // we are calling a functions with 100 and 200 parame
 // 2 step makeBetweenFunc(min, max) after calling is going to return ===>
 
 //function (num) {
-    //return num >= 100 && num <= 200
+//return num >= 100 && num <= 200
 //}
 
 // step 3 - but to RUN function (num) we nned to save it in a variable!
@@ -257,6 +257,88 @@ makeBetweenFunc(100, 200); // we are calling a functions with 100 and 200 parame
 // const isBetween = makeBetweenFunc(min, max) - we are saving the RETURN of the makeBetweenFunc(min, max) (which is function (num)....) to varianble isBetween!
 
 // step 5 - isBetween(10) - function(num) will now looks like this (function(10)) amd it WILL USE (min and max from the previous, higher function)
+
+//** Object methods **//
+
+// We can add functions as properties in an objects - this functions are called object medhods
+
+const math = {
+    multiply: function (x, y) { // this is called object method
+        return x * y
+    },
+    devide: function (x, y) { // this funtion is called object method
+        return x / y
+    },
+    summ: function (x, y) { // and this function is called object method
+        return x + y
+    }
+};
+
+math.multiply(2, 5); // we will access multiply function AND will run it // output: 10;
+console.log(math.multiply(2, 5)); // output 10;
+
+//*Shorthand way of adding methods to an objects*//
+
+const info = {
+    phrase: 'Hello',
+    total(x, y) {     // shorthand option, you don't need to write keyword function
+        return x + y
+    }
+}
+
+info.total(5, 7)// output 12;
+
+//** Keyword THIS**//
+
+//*Use the keywprd THIS to access other properties on the same object*//
+
+const person = {
+    first: 'Robert',
+    last: 'Pattison',
+    fullName() {
+        return `${this.first} ${this.last}`
+    }
+};
+
+person.fullName(); // Robert Pattison (we can access other object properties, because of keyword this!)
+person.last = 'Plant'; // we can change some object proberty
+person.fullName(); // Robert Plant (and the access changed propertie once again by using keyword this) 
+
+//!! IMPORTANT !!//
+
+// The value of THIS depends on the invocation context (контекст вызова!) of the function it is used in!
+
+const personTwo = person.fullName()
+
+// person.fullName() ===> the keyword this REVERS to the object person (on left side of the dot)
+
+//personTwo() // we called the same function, but keyword this is NOT referring to a person object.
+
+const hen = {
+    name: 'Helen',
+    eggCount: 0,
+    layAnEgg() {
+        return `'EGG' ${this.eggCount++}`;
+    }
+};
+
+console.log(hen.name); // 'Helen'
+console.log(hen.eggCount); // 0,
+console.log(hen.layAnEgg());
+console.log(hen.layAnEgg());
+console.log(hen.eggCount);
+
+// hen.layAnEgg();
+// console.log(hen.eggCount);
+
+
+
+
+
+
+
+
+
 
 
 
