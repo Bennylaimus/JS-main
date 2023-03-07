@@ -318,7 +318,8 @@ const hen = {
     name: 'Helen',
     eggCount: 0,
     layAnEgg() {
-        return `'EGG' ${this.eggCount++}`;
+        this.eggCount++;
+        return 'EGG'
     }
 };
 
@@ -330,6 +331,89 @@ console.log(hen.eggCount);
 
 // hen.layAnEgg();
 // console.log(hen.eggCount);
+
+//** TRY/CATCH **//
+
+// hello.toUpperCase() // will cause an Error as hello is NOT defined
+
+// 1. If we anticipate (предполагаем) that something will cause an error, we can wrap (обернуть) it in a TRY block:
+
+// try {
+//     hello.toUpperCase();
+// }
+
+// 2. Catch - it this part we define what will happen, if the code putted in TRY will cause an error:
+
+try {
+    hello.toLowerCase(); // <=== this will cause an error
+} catch {
+    console.log('Warning! An Error Detected!'); // <=== sothis part will run
+}
+
+// 3. The error in try {} will be defined and code will CONTINUE to run!
+
+//*Trying to catch an error in a function*//
+
+function yell(message) {
+    console.log(message.toUpperCase().repeat(3));
+}
+
+yell('Hello!'); // <=== everything works here
+// yell(142344); // <=== but what if a number is passed as an argument, it will not work with strings methods like .toUpperCase() and .repeat()!
+
+// We can wrap this error by using try/catch approach //
+
+function yelll(msg) {
+    try {
+        console.log(msg.toUpperCase().repeat(3));
+    } catch {
+        console.log('Please pass a string next time!');
+    }
+};
+
+yelll('Hi!'); // <=== function works
+yelll(1231231); // <==== try/catch works
+
+//**ARRAY CALLBACK  METHODS **//
+
+// ** forEach Method ** // (also refer to array-methods.js file)
+
+// forEach() method accepts a callback function.
+// Calls the function once per element in the array.
+
+const arrOfNums = [1, 2, 3, 4, 5, 6, 7];
+
+arrOfNums.forEach(function (number) {
+    console.log(number * number);
+}); // 1. 4. 3. 16, 25, 36, 49,
+
+arrOfNums.forEach(function (number) {
+    if (number % 2 === 0) {
+        console.log(number); // 2, 4, 6;
+    }
+});
+
+const movieList = [
+    {
+        title: 'Back to The Future',
+        score: 99
+    },
+    {
+        title: 'Matrix',
+        score: 90
+    },
+    {
+        title: 'Avatar',
+        score: 85
+    }
+];
+
+movieList.forEach(function (el) {
+    console.log(`${el.title} ${el.score} / 100`);
+});
+
+
+
 
 
 
