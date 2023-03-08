@@ -412,6 +412,27 @@ movieList.forEach(function (el) {
     console.log(`${el.title} ${el.score} / 100`);
 });
 
+// ** Map() method ** //
+
+// Similar as forEach() method, but it generates a new array!
+// It's like the way to pass array elements from one state to another
+
+const texts = ['rofl', 'lol', 'kekw', 'rly?'];
+const caps = texts.map(function (el) {
+    return el.toUpperCase();
+})
+
+console.log(texts); // ['rofl', 'lol', 'kekw', 'rly?'];
+console.log(caps); // ['ROFL', 'LOL', 'KEKW', 'RLY?'];
+
+const fullNames = [{ first: 'Albus', last: 'Dumbledore' }, { first: 'Harry', last: 'Potter' }, { first: 'Hermione', last: 'Granger' }, { first: 'Ron', last: 'Weasley' }, { first: 'Rubeus', last: 'Hagrid' }, { first: 'Minerva', last: 'McGonagall' }, { first: 'Severus', last: 'Snape' }];
+
+const firstNames = fullNames.map(function (el) {
+    return el.first;
+});
+
+console.log(firstNames);
+
 
 
 
