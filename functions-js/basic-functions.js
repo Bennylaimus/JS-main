@@ -433,6 +433,94 @@ const firstNames = fullNames.map(function (el) {
 
 console.log(firstNames);
 
+//** ARROW FUNCTIONS **//
+
+const square = (num) => {
+    return num * num
+};
+
+//If there is only ONE SINGLE PARAMETR you can pass it without ()!
+// const square = num => {
+// return num * num
+//}
+
+
+square(5); // 25
+
+const summOfTwo = (num1, num2) => {
+    return num1 = num2
+};
+
+summOfTwo(5, 7); // 12
+
+const rollingDie = () => {
+    return Math.floor(Math.random() * 6) + 1;
+}
+
+rollingDie(); // random number from 1 to 6
+
+//** */ ARROW FUNCTIONS IMPLICIT RETURNS **//
+
+const isEven = num => (
+    num % 2 === 0         // <=== implicit return
+);
+
+const isOdd = num => num % 2 === 1; // <=== one-line implicit return
+
+//!!** ARROW FUNCTION SYNTAX (including implicit returns) **!!//
+
+// (num1, num2) => {statement};
+// (num1, num2) => expression;
+// (num1, num2) => {return expression};
+
+// (num1) => {statement};
+// num1 => {statement};
+
+// () => {statement};
+// () => expression;
+// () => {return expression};
+
+// (num1, num2, num2) => expression
+
+// ** setTimeout & setInterval ** //
+
+setTimeout(() => { // <=== will complete any function, passed as an argument(callback function)
+    console.log('...are you still there?') // this will be executed ...
+}, 3000); // <=== after 3000 miliseconds (3 seconds)
+
+// If you have console.log() BEFORE setTimeout() function
+// And console.log() AFTER setTimeout() function..
+// BOTH console.log() will be executed immideately and only what is inside setTimeout() function will be executed after 3 seconds
+
+const id = setInterval(() => {
+    console.log(Math.random()) // <=== works same as setTimeout()...
+}, 3000); // .. but will return callback function EVERY 2000 miliseconds (2 sec)
+
+clearInterval(id);
+
+// To STOP setInterval() function we need to use clearInterval() <=== and pass and id as a parametr
+// clearInterval(id); // will stop this ONE PARTICOLAR id = setInterval () function
+
+// ** filter() method ** // (also refer to array-methors.js)
+
+// Creates a NEW ARRAY with all elements that PASS the test implemented by the provided function.
+
+const numberss = [9, 8, 7, 6, 5, 4, 3, 2, 1];
+
+const smallNumbers = numberss.filter(number => number < 5);
+// [4,3,2,1];
+
+console.log(smallNumbers);
+
+
+
+
+
+
+
+
+
+
 
 
 
