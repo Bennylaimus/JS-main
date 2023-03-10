@@ -512,6 +512,120 @@ const smallNumbers = numberss.filter(number => number < 5);
 
 console.log(smallNumbers);
 
+// ** SOME() & EVERY() methods ** // (also refer to array-emthods-js)
+
+//*EVERY*// - tests wheter ALL lements in the array pass the provided function. It retunrs a Boolean value (true or false)
+
+const words = ['dog', 'dig', 'dil', 'cat'];
+
+let test = words.every(word => word.length === 3) // true, because all the array elements passed this test!
+console.log(test);
+
+let testTwo = words.every(word => word[0] === 'd'); // false, bacause 'cat didn't pass this test!
+console.log(testTwo);
+
+//*SOME*// - similar to every, but  returns true if ANY (at leats ONE) of the array elements passed the test function
+
+let testThree = words.some(word => word[1] === 'o') // returns true, because at leats one element ('dog') passed the test
+console.log(testThree);
+
+// ** REDUCE() method ** // (also refer to array-methods-js)
+
+// Executes a reducer fucntion on each element of the arraym RESULTING IN A !!SINGLE!! VALUE
+
+//Example: Summing an array//:
+
+[3, 5, 7, 9].reduce((accumulator, currentValue) => {
+    return accumulator + currentValue
+});
+
+// first call:
+// accumulator: 3
+// currentValue: 5
+// return: 8
+
+// second call:
+// accumulator: 8,
+// currentValue: 7,
+// return 15
+
+// third call:
+// accumulator: 15,
+// currentValue: 9,
+// return 24  <=== the end result
+
+//*Example: Finding minimal element it the whole array
+
+const prices = [10.55, 1.50, 9.99, 45.78, 6.33];
+
+prices.reduce((minimal, price) => {
+    if (price < minimal) {
+        return price // return the number, which is lower, than our current number, and store it as a new minimum value
+    }
+    return minimal // otherwise return minimal and keep store it as a minimal number
+});
+
+// Same works for searching maximum value (price > minimal);
+
+const evens = [2, 4, 6, 8];
+
+const resulting = evens.reduce((total, num) => total + num, 100) // We can pass a second argument in a reduce method (,100) and it will be a starting point (like very first total value, the value we are starting from)
+console.log(resulting); // 100 + 2, 102 + 4, 106 + 6, 112 + 8, end result 120
+
+// ** Arrow function and keyword THIS ** //
+
+const persona = {
+    firstName: 'Vigo',
+    lastName: 'Mortinsen',
+    fullName: function () {
+        return `${this.firstName} ${this.lastName}`
+    }
+}
+
+// console.log(persona.fullName()); // returns 'Vigo Mortinsen'
+
+//! If we would declare fullName via arrow fucntion syntax fullName: () => {return `${this.firstName} ${this.lastName}}, this would IGNORE persona object and would refer to window object.
+
+// But sometimes, we can benefit from that, from that, that arrow functions refers to a window object
+
+const personaTwo = {
+    firstName: 'Andrew',
+    lastName: 'Komorkovich',
+    fullPersonaName: function () {
+        return `${this.firstName} ${this.lastName}`
+    },
+    shoutName: function () {
+        setTimeout(() => {
+            console.log(this.fullPersonaName());
+        }, 2000)
+    }
+};
+
+// 1. Because of arrow function => return this.fullPersonaName will 'ignore' setTimeout() function, which is actualy refers to window object as this is called inside an arrow function
+
+// 2. It will refer to shoutName method() as it is declared as function ()
+
+// 3. And will execute fullPersonaName() as this is what we asked to return and because fullPersonaName also declared via fucntion()
+
+console.log(personaTwo.shoutName());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
