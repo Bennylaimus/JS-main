@@ -180,6 +180,219 @@
 //         console.log('The wrong number!');
 // }
 
+// **DEFAULT PARAMS ** // - Default parametrs.
+// If you user don't put in some specific parametr, we want to some default parametrs are aused.
+
+function rollDie(numSides) {
+    return Math.floor(Math.random() * numSides) + 1;
+}
+
+console.log(rollDie(6)); // returns numbers from 1 to 6
+console.log(rollDie(20)); //return numbers from 1 to 20
+// In this case user decidec how much random number would be, but what if we would like to put some default parametr in the 'numSides', for example 6, so parametr would always be 6
+
+//To do this we can set a parametr INSIDE a function!
+
+// function rollDie(numSides = 6) {    // <=== if no parametr is passed it will always be 6! rollDie() // rollDie(6)
+//     return Math.floor(Math.random() * numSides) + 1;
+// }
+
+function summary(a, b = 1) {
+    return a + b;
+}
+
+console.log(summary(20)); // output 21, a is passed by user, but b will always be 1, if don't pass something else!
+
+// ** SPREAD FUNCTION CALLS ** //
+
+// Expands (распостряняет, 'размазывает')) an ITERABLE (like array, string etc. into a list of arguments)
+
+let nums = [2, 3, 4, 5, 9];
+
+console.log(Math.max(nums)); // output NaN
+console.log(Math.max(...nums)); // same as Math.max(2,3,4,5,9);
+
+// **SPREAD WITH ARRAY LITERALS ** //
+
+// Spread IN array literals creates a new array using an existing array.
+// Spreads an elements from one array into a new array.
+
+const nums1 = [1, 2, 3];
+const nums2 = [4, 5, 6];
+
+const newArr = [...nums1, ...nums2]; // [1, 2, 3, 4, 5, 6];
+const anotherArr = ['a', 'b', ...nums2]; // ['a', 'b', 4, 5, 6];
+const anotherTwo = [...nums1, 10, 20, ...nums2] // [1, 2, 3, 10, 20, 4, 5, 6];
+
+// ** SPREAD IN OBJECT LITERALS ** //
+
+// Copies properties from one object into another object literals
+
+const feline = { legs: 4, family: 'Felidae' };
+const canine = { family: 'Caninae', furry: true };
+
+const dog = { ...canine, isPet: true };
+// output {family: 'Caninae', furry: true, isPet: true};
+
+const catDog = { ...feline, ...canine };
+// output: { legs: 4, family: 'Felidae', family: 'Caninae', furry: true }
+
+const arrExample = { ...[1, 2, 3, 4] }; // indexes are printed out as a properties
+// 0: 1, 1: 2, 2: 3, 3: 4
+console.log(arrExample);
+
+const strExample = { ...'hello' }; // same with ana array, indexies are printed out as a properties of the string
+// 0: 'h', 1: 'e', 2: 'l', 3: 'l', 4: 'o';
+console.log(strExample);
+
+// ** REST PARAMS ** //
+// Looks like a SPREAD (because it also uses ... synday), but is is completely different!
+
+// We are gacing here an ARGUMENTS object! What is it? ===>
+// It's:
+// == Available insede every function
+// == It's an ARRAY-LIKE object:
+// ===== Has a length property,
+// ===== Does NOT have array methods like push/pop
+// == Contains all the arguments passed to the function
+// == Not available insede of arrow functions!
+
+function sumAll() {
+    let total = 0;
+    for (let i = 0; i < arguments.length; i++) {
+        total += arguments[i];
+    }
+    return total;
+};
+
+sumAll(8, 4, 5, 2); // 19
+sumAll(2, 3); // 5
+
+// ARGUMENTS keyword will automaticaly holds all argument passed into our function! (8, 4, 5, 2) in fist case!
+
+// as ARGUMENTS holds all the parametrs passed to the function, might be seen, that ARGUMENTS will act like an array, BUT IS DON'T! (we cannot use any array methods with ARGUMENTS) and this is when the REST PARAMS come in ===>
+
+// REST PARAMS actually collects all remainingarguments into an actual array!
+
+function summa(nums) {
+    console.log(nums);
+};
+
+summa(3) // nums will only holds 3
+summa(3, 5); // nums still holds only 3, as it is an only parametr in the function!
+
+// But if we use function summa(...nums) {..} ===> it will collect ALL the parametrs and actualy CONVERT THEM INTO ARRAY, and we will be able to use an array method now!
+
+function raceResults(gold, silver, bronze, ...restParticipants) {
+    console.log(`The Gold medal goes to ${gold}`),
+        console.log(`The Silver medal goes to ${silver}`),
+        console.log(`The Bronze medal goes to ${bronze}`),
+        console.log(`And a Big Thanks to all the participants: ${restParticipants}`)
+};
+
+console.log(raceResults('Yura', 'Andrew', 'Bebo', 'Tim', 'Clarry', 'Larry', 'Cappy', 'Sissy'));
+
+// ** DESTRUCTURING ARRAY, OBJECTS, PARAMS ** //
+
+// A short, clear syntax to 'unpack':
+// == values from arrays,
+// == Propertis from objects,
+// Into distinct (отчётливый, определённый) variables.
+
+// ** Destructuring Array ** //
+
+//For example we have an array of game scores
+const scores = [927712, 887261, 822131, 761121, 541121, 311921];
+
+// And we want to 'put' every score to a separate variable, like:
+const highScore = scores[0]; // highScore = 927712
+const secondScore = scores[1]; // secondScore = 887261
+
+//The shorter and cleaner syntax to do it would be:
+const [gold, silver] = scores;
+// gold: now holds gold = 927712
+// silver: now holds silver = 887261
+
+const marathonResults = ['Yura', 'Andrew', 'Coco', 'Bebo', 'Sammy', 'Lizzy'];
+
+const [goldy, silvery, ...everyOneElse] = marathonResults;
+//goldy: 'Yura',
+//silvery: 'Andrew',
+//everyOneelse: ['Coco', 'Bebo', 'Sammy'];
+
+// ** Destructuring an Objects ** //
+
+const newUser = {
+    firstName: 'Andrew',
+    lastName: 'Komor',
+    email: 'komorkomor@gmail.com',
+    isAdmin: true,
+    age: 36,
+    sex: 'male',
+    graduate: 1999,
+    contry: 'Latvia'
+};
+
+// If we would like to store a name, lastname and an email in a separate varianbles, we could do following:
+
+// const firstName = newUser.firstName; // firstName = 'Andrew',
+// const lastName = newUser.lastName // lastName = 'Komor'
+// const userEmail = newUser.email // userEmail = 'komorkomor@gmail.com'
+
+//But we could do something more compact and convenient:
+
+const { firstName, lastName, email } = newUser;
+
+// Basically - this is an equivalent:
+
+// const firstName = newUser.firstName;
+// and
+// const { firstName } = newUser // <==== this 'says' make me a variable called firstName, from newUser.firstName
+
+// We can even take a property name from an object and save it to variable and call this variable different, for example. if I want to store graduate value in a varianble, but not 'graduate' variable, but 'learningFinished' variable we can do following:
+
+const { graduate: learningFinished } = newUser // now the property of 'graduate' value (which is 1999) will be stored in a variable 'learningFinished'
+
+// We can even assing a new value
+
+const { firstNames, lastNames, region = 'Oklahoma' } = user2
+// But if region property already is used in an Object region will hold a property from an object, not what we call him
+
+// ** Destructuring params ** // (most commonly used with an objects!)
+
+const fullName = ({ first, last }) => { // <=== Basically we are destructiong object to a variables INSIDE functions parametrs already
+
+    // not doing something like this ==>
+    // == > const {first, last} = runner
+
+    return `${first} ${last}`
+};
+// not doing something like this ==>
+// ==> and then fullName(runner);
+
+const runner = {
+    first: 'Eliud',
+    last: 'Kipchoge',
+    contry: 'Kenya',
+}
+
+fullName(runner); // 'Eliud Kipchoge';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
