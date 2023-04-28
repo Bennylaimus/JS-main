@@ -1,0 +1,73 @@
+=====================// 1st Lesson: THE CALL STACK // ===========================
+
+The mechanism the JS interpreter uses to keep track of its place 
+in a script that calls multiple functions.
+
+How JS 'knows' what function is currenctly being run and what 
+fucntion are called from within that function, etc.
+
+Last thing in ... first thing out ... principe
+
+HOW IT WORKS:
+
+ - When a script calls a function, the interpreter adds it to the 
+   call stack and then starts carrying out the function.
+ - Any functions that are called by that function are added to the 
+   call stack further, and run where their calls are reached.
+ - When the current function is finished, the interpreter takes if off
+   the stack and resumes execution where if ledt off in the last code listing.
+
+**** Widget for visualizing call stacks: loupe.com  ****  
+**** Of Debuger in browser: Source => Page => app.js file =>
+     => add breakpoint => Call Stack => Refresh the page =>
+     => processing by next step value
+
+
+
+
+=======// 2nd Lesson WebAPI's & Single Threaded (однопоточность) // ===========
+
+At any given point in time, that single JS thread is running at most
+ONE line os JS code.
+
+But what happens when something takes a long time? For example:
+
+1. const newTodo = input.valuel // get (receive) user's input // takes 0.5sec
+2. saveToDatabasa(newTodo); // saving this new user's input into a database // takes 2sec
+3. input.value = '' // setiing input value back to empty // takes 0.2sec
+
+Fortunately we have a workaround options! (Callbacks // setTimeout)
+
+console.log('Print me First!');
+setTimeout(() => {
+    console.log('Print me Third after 3 seconds!')
+}, 3000);
+console.log('Print me Second!');
+
+How does it possible if JS is single - threaded and only ONE operation can
+be processed at one time?
+
+Answer is - browser is doing a part of the job (it is mosty written on a different
+languages, like C++ and it can to things JS can't do!), so JS actually 'deligates'
+some work to a browser!
+
+- Browser come with Web APIs that are able  to handle certain tasks in 
+  the background (like making requests of setTimeout)
+
+- The JS call stact recognizes these Web API functions and passes the off
+  to the browser to take care of
+
+- Once the browser finishes those tasks, they return and re pushed onto 
+  the stack as a call back
+
+
+
+
+
+
+
+
+
+
+
+
