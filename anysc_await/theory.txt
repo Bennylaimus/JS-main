@@ -60,6 +60,80 @@ some work to a browser!
 - Once the browser finishes those tasks, they return and re pushed onto 
   the stack as a call back
 
+==============// 3rd Lesson: THE CALLBACKS HELL PROBLEM // =====================
+
+Let's say, we're setting background colors to different colors and we want them to change
+after some certain amount of time:
+
+setTimeout(() => {
+    document.body.style.backgroundColor = 'red';
+}, 1000);
+
+setTimeout(() => {
+    document.body.style.backgroundColor = 'orange';
+}, 2000);
+
+setTimeout(() => {
+    document.body.style.backgroundColor = 'yellow';
+}, 3000);
+
+// Or we can NEST everytnig:
+
+setTimeout(() => {
+    document.body.style.backgroundColor = 'red';
+    setTimeout(() => {
+        document.body.style.backgroundColor = 'orange';
+        setTimeout(() => {
+            document.body.style.backgroundColor = 'yellow';
+        }, 1000);
+    }, 1000);
+}, 1000);
+
+You can also do a generic fucntion, so you don't need to hard-code color and delay seconds everytime, for example:
+
+const randomColorDelay = (color, delay) => {
+    setTimeout(() => {
+        document.body.style.backgroundColor = color;
+    }, delay);
+};
+
+randomColorDelay('red', 3000);
+
+But we can't pick and change NEXT color this way, insted we could also do NEXTING here, by passing another function,
+let's say doNext() as an argument:
+
+const randomColorDelay = (color, delay, doNext) => {
+    setTimeout(() => {
+        document.body.style.backgroundColor = color;
+    }, delay);
+    doNext()   <=== run doNext() to change next color
+};
+
+randomColorDelay('red', 3000, () => {
+  console.log('This is our doNext function');
+});
+
+Why to we need callbacks and nested functions like this?
+As this is increabibly common patter, for example:
+
+movieSearchAPI('amadeus', () => {    // 1. our movieSearchAPI() function searches a movie from movie-API data base
+    saveToMyDB(movie, () => {        // 2. after movie is found we run saveToMyDB() function to save some 'movie' to my data base
+        () => {
+            // and if everything wen of, withour any errors do this:
+        }                        // 3.   
+    }, () => {
+        // or, if something went wrong, and there is some errors - do this
+    })
+});
+
+
+//==============================  4th Lesson: ENTER PROMISES ====================================================//
+
+A Promise is an object representing the eventual completion or failure of an 
+asynchronous operation.
+Promise (промис) - это объект, представляющий результат успешного или неудачного завершения асинхронной операции
+
+
 
 
 
