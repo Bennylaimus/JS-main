@@ -221,9 +221,171 @@ fakeReguestData('www.google.com/page1')
   .then(() => return fakeReguestData('www.google.com/page4'))
   .catch((error) => console.log(error))          // only one .catch can be used in this case in the end
 
+// ============================== 6th Lesson: async keyword ===========================================================//
 
+Async functions:
 
+A newer and cleaner syntax for working with async code!
+So called syntax - sugar
 
+- Async functions always return a promise
+- If the function returns a value (return 'Hello world') // 'Hello world' is a value
+  the promise will be resolved with that value (same as .then((data)) (data is a value)
+- If the function throws an exeption, the promise will be rejected
+
+Basic syntax:
+
+async function hello() {
+    return 'Hello, guys!'     // async + return = 'resolve' .then(('Hello, guys!'))
+};
+
+hello() // return Promise {resolved}, value 'Hello, guys!'
+
+async function bye() {
+    throw new Error('Good bye!') // async + throw new Error = rejected
+};
+
+bye() // returns a Promise {rejected}, value 'Good bye!' (same as .catch(('Good bye!'))
+
+const login = async (username, password) => {
+    if (!username || !password) {
+        throw new Error('Invalid login!')
+    } else if (username != 'Andrew' && password != 'pjladd') {
+        throw new Error('Invalid username or password!')
+    } else {
+        return 'Congratulation, login succesfull'
+    }
+};
+
+login()
+    .then((message) => {
+        console.log(message);
+    })
+    .catch((message) => {
+        console.log(message);
+    });
+
+// ======================================= 7th Lesson: await keyword ================================================= //
+
+Await keyword:
+
+- We are using 'await' keyword together (inside) async function, basically,
+  inside of functions declared with async (  async function()  )
+- 'await' will pause the execution of the function, WAITING FOR A PROMISE TO BE RESOLVED!
+
+Example (with .then syntax):
+
+const delayedColorChange = (color, delay) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            document.body.style.backgroundColor = color;
+            resolve();
+        }, delay)
+    })
+}
+
+// delayedColorChange('red', 2000)
+//     .then(() => delayedColorChange('orange', 2000))
+//     .then(() => delayedColorChange('yellow', 2000))
+//     .then(() => delayedColorChange('green', 2000))
+//     .then(() => delayedColorChange('blue', 2000))
+//     .then(() => delayedColorChange('indigo', 2000))
+//     .then(() => delayedColorChange('viole', 2000))
+
+Example (with async - await):
+
+const rainbow = async () => {
+    await delayedColorChange('red', 1000);
+    await delayedColorChange('orange', 1000); // <=== this code will run ONLY when forst part
+                                                 await delayedColorChange('red', 1000) is resolved! etc.
+    await delayedColorChange('green', 1000);
+    //And then in the end we can even add some other functions() to be executed!
+    await anotherFunction('number', 'summ')
+    // Or execute (resolve) rainbow() by it's own
+    return 'End of the Rainbow'
+}
+
+rainbow().then((message) => {
+    console.log('Rainbow ends here!'); // this will be executed only after all 'awaits'
+    console.log(message) // 'End of the rainbow'
+});
+
+async function endOfRainbow() {
+    await rainbow();
+    return 'Now it really ended!'
+};
+
+endOfRainbow()
+    .then((message) => {
+        console.log(message);
+    })
+
+You can even 'nest' them
+async function endOfRainbow() {
+     await rainbow();
+     return 'Now it really ended!'
+ };
+
+ endOfRainbow()
+     .then((message) => {
+         console.log(message);
+     })
+
+// =========================== 8th Lesson: Handling error in async functions (reject) ========================= //
+
+Code example:
+
+const fakeRequestPromise = (url) => {
+    return new Promise((resolve, reject) => {
+        const delay = Math.floor(Math.random() * (4500)) + 500;
+        setTimeout(() => {
+            if (delay > 1000) {
+                reject('Connection Timeout :(')
+            } else {
+                resolve('resolved');
+            }
+        }, delay)
+    })
+};
+
+We can CAPTURE a value returned in resolve in variable and the worj with that variable
+
+async function receivingData() {
+     let data = await fakeRequestPromise('myhouse/page1');
+     console.log(data);
+};
+
+receivingData(); // prints resolved
+
+****How do handle errors in async functions? (.catch / reject)****
+
+We can actually do it with a try - catch:
+
+async function receivingData() {
+     await fakeRequestPromise('myhouse/page1');
+     try {
+         erororr.log('hello') //  some error appears
+     }
+     catch (error) {
+         console.log('An Error appeared', error) // error is the value of the error in try itself (erororr.log('hello') in or case)
+     }
+ };
+
+receivingData();
+
+How it will work with our fakeRequestPromise()
+
+async function receiveData() {
+    try {
+        await fakeRequestPromise('myhomepage/page1');
+        await fakeRequestPromise('myhomepage/page2'); // if at some point error (reject) will appear it will be caught 
+        await fakeRequestPromise('myhomepage/page3'); // in catch and we will see it and will be able to check what exactly this erro is!
+    }
+    catch (error) {
+        console.log('Error is caught');
+        console.log(error);
+    }
+};
 
 
 
