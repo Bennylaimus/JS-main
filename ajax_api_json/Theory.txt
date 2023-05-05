@@ -1,0 +1,84 @@
+ // ========================== 1st Lesson: Into to AJAX & APIs ============================== //
+
+ AJAX (Asynchronous Javascript And XML):
+ Basically AJAX is all about making different browser - Javascript requests
+
+ APIs:
+ API (Application Programming Interface) (but basically it's just a way for one machine's programm
+ to interact with the other machine's programm, one software with another software)
+
+ Main idea of AJAX request is to get some API (just some data, that is received in the
+ specific format called JSON), not the whole page (containing HTML, CSS and all JS scripts), but just
+ some specific small amount of data.
+
+You will ofter hear Web API termin - basically this is a HTTP based programms interactiong with
+other HTTP based programms.
+
+JSON: (Java Script Object Notation) 
+ - Official wedsite: json.org
+ - JSON validator: jsonformatter.curiousconcept.com
+
+When we send an API request (in browser it is an HTTP request send from us to other browser's software)
+we receive a reply:
+ - we can receive it in XML format (an old less commonly used method),
+ - or in JSON format - most commonly used API receive format
+So it more like AJAJ (Asynschronous Javascript And Json), but everyone still says just AJAX
+So bacicalley JSON - is just a way to FORMATTING DATA and transfer it in an
+understandable format
+
+ - JSON format keep an information in OBJECT - style format, but there are few differences!
+
+ 1. every key - value pair is a "" (double quoted) string
+    "squadName": "Super Hero Squad",
+    "formed": 2016,
+    "active": true,
+
+2. It doesn't support undefined value (it will consider it as a string) "isActive": "undefined"
+
+Basically, when we receive a JSON reply - we receive a huge "" string and we can't really
+extract a data from it.
+
+Method we use to extract data from JSON file is:
+
+JSON.parse("string") ===> and JSON file will be parsed into JavaScript Object
+
+Example:
+
+JSON parse example:
+const data = { "time": { "updated": "May 5, 2023 16:35:00 UTC", "updatedISO": "2023-05-05T16:35:00+00:00", "updateduk": "May 5, 2023 at 17:35 BST" }, "disclaimer": "This data was produced from the CoinDesk Bitcoin Price Index (USD). Non-USD currency data converted using hourly conversion rate from openexchangerates.org", "chartName": "Bitcoin", "bpi": { "USD": { "code": "USD", "symbol": "&#36;", "rate": "29,520.5065", "description": "United States Dollar", "rate_float": 29520.5065 }, "GBP": { "code": "GBP", "symbol": "&pound;", "rate": "24,667.0991", "description": "British Pound Sterling", "rate_float": 24667.0991 }, "EUR": { "code": "EUR", "symbol": "&euro;", "rate": "28,757.2833", "description": "Euro", "rate_float": 28757.2833 } } }
+
+JSON.parse(data); // ==> JSON file parsed to an object
+
+const parsedData = JSON.parse(data) // we can the save parsed data to a variable
+
+parsedData.time.updateduk // "2023-05-05T16:35:00+00:00" // and we can now work with it like with an object and extract data as it is an object
+
+Or we can go to other 'direction' and get some data from our object to be putted and parsed to a JSON file
+
+Method we use for this is:
+
+JSON.stringify(data)
+(we replace all undefined's with a null)
+
+Example:
+
+let info = {
+    animal: 'dog',
+    age: 15,
+    isHomeless: false,
+    owner: undefined,
+};
+
+let toJson = JSON.stringify(info);
+console.log(toJson); // output: {"animal":"dog","age":15,"isHomeless":false} (no undefined, as JSON do not accept it!)
+
+
+
+
+
+
+
+
+
+
+
