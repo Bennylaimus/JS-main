@@ -1,23 +1,57 @@
-// JSON parse example:
-// const data = { "time": { "updated": "May 5, 2023 16:35:00 UTC", "updatedISO": "2023-05-05T16:35:00+00:00", "updateduk": "May 5, 2023 at 17:35 BST" }, "disclaimer": "This data was produced from the CoinDesk Bitcoin Price Index (USD). Non-USD currency data converted using hourly conversion rate from openexchangerates.org", "chartName": "Bitcoin", "bpi": { "USD": { "code": "USD", "symbol": "&#36;", "rate": "29,520.5065", "description": "United States Dollar", "rate_float": 29520.5065 }, "GBP": { "code": "GBP", "symbol": "&pound;", "rate": "24,667.0991", "description": "British Pound Sterling", "rate_float": 24667.0991 }, "EUR": { "code": "EUR", "symbol": "&euro;", "rate": "28,757.2833", "description": "Euro", "rate_float": 28757.2833 } } }
+// Fetch function and getting API with Fetch function example
+// API we are working with (getting): 'https://swapi.dev/api/people/1/'
 
-// JSON.parse(data); // ==> JSON file parsed to an object
+//1 step:
+fetch("https://swapi.dev/api/people/1/"); // after we run this we get bacj a Promise (pending, fulfilled, response)
 
-// const parsedData = JSON.parse(data) // we can the save parsed data to a variable
+//2 step:
+// As this is a Promise, we can actually use .then and .catch methods on it:
+// fetch("https://swapi.dev/api/people/1/")
+//     .then((res) => {                     // res is Promise Response
+//         console.log('Resolved', res);
+//         // But we need to use .json method on the resolve (res) and it will also return to us a Promise
+//         // so we are using .then once again!
+//         res.json().then((data) => console.log(data)); // and only now we finnaly get our json object
+//     })
+//     .catch((err) => {
+//         console.log('Error!', err);
+//     })
 
-// parsedData.time.updateduk // "2023-05-05T16:35:00+00:00" // and we can now work with it like with an object and extract data as it is an object
+// This code above can be refactoring like this:
 
-// // Reverse action parse object to JSON file:
+// fetch("https://swapi.dev/api/people/1/")
+//     .then((response) => {
+//         return response.json();
+//     })
+//     .then((data) => {
+//         console.log(data);
+//     })
+//     .catch((error) => {
+//         console.log('Not Loaded!', error)
+//     })
 
-let info = {
-    animal: 'dog',
-    age: 15,
-    isHomeless: false,
-    owner: undefined,
+// In case if we have a nested / multiple requests - we can just use Promise syntax with return / .then
+
+// In this example above we are actually getting one API and only then another
+// Some time we MUST to it (for example, when we getting a full movie list first),
+// and only then an information about some specific movie
+
+// But we can actually make another refactoring using async fucntion!
+
+// Example:
+
+const loadStarWarsInfo = async () => {
+    try {                                  // remember to use try - catch construction to catch any error in async functions!
+        const response1 = await fetch("https://swapi.dev/api/people/1/")
+        const data1 = await response1.json();
+        console.log(data1);
+        const response2 = await fetch("https://swapi.dev/api/people/2/")
+        const data2 = await response2.json();
+        console.log(data2);
+    }
+    catch (error) {
+        console.log(error)
+    }
 };
 
-let toJson = JSON.stringify(info);
-console.log(toJson); // output: {"animal":"dog","age":15,"isHomeless":false} (no undefined, as JSON do not accept it!)
-
-
-
+loadStarWarsInfo();
