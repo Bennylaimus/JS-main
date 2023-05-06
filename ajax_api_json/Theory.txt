@@ -1,4 +1,4 @@
- // ========================== 1st Lesson: Into to AJAX & APIs ============================== //
+ // ========================== 1st Lesson: Into to AJAX & APIs * JSON ============================== //
 
  AJAX (Asynchronous Javascript And XML):
  Basically AJAX is all about making different browser - Javascript requests
@@ -71,6 +71,91 @@ let info = {
 
 let toJson = JSON.stringify(info);
 console.log(toJson); // output: {"animal":"dog","age":15,"isHomeless":false} (no undefined, as JSON do not accept it!)
+
+// ============================== 2nd Lesson: Postman & Hoppscotch tools =================================================== //
+
+The 'Postman' app is used by developer to check some APIs (to set their own API and test our own server connection
+by sending some requests to our servers // useful with Node.js), check your GET requests etc.
+Download for 'Postman' postman.com/downloads (an application)
+
+Another similar tools, that does not require an authorisation is 'Hoppscotch'
+'Hoppscotch' can be downloaded at hoppscotch.io (a link! Don't nee to download)
+
+// ============== 3rd Lesson: HTTP Verbs, Status Code, Query Strings, HTTP Headers ======================================== //
+
+The Hypertext Transfer Protocol (HTTP) is designed to enable communications between clients and servers.
+
+HTTP works as a request-response protocol between a client and server.
+
+Example: A client (browser) sends an HTTP request to the server; 
+then the server returns a response to the client. The response contains status information about the request 
+and may also contain the requested content.
+
+*****VERBS*****:
+GET // POST // PUT // PATCH // DELETE // HEAD // CONNECT // OPTIONS // TRACE // CUSTOM
+
+*****HTTP Status Code*****:
+
+A code, that comes back in out HTTP status request:
+Status: 200, Status: 404, Status: 500 etc.
+Need to read more about them!
+
+***** Query Strings ******
+
+The information we are prividing in the URL!
+Depending on what we are providing - we are getting different otputs!
+There are also some specific patterns, that are used in the URL requests, for example:
+
+www.swapi/api/people/:id/  (:id)
+: - meens it's a variable
+id - will be replaced with some of your information (some of your variable)
+===> www.swapi/api/people/5
+
+You can also see this pattern with {}: // www.swapi/api/people/{id}, or <id>
+
+Usylly in URL string we see something like this:
+www.amazon.com/?k=bucket&ctid=3dform&person=22
+
+The 'info' AFTER '?' are key - value pairs
+
+Example with our swapi/api:
+
+www.swapi/api/com/?color=blue&age=22&silly=yes
+
+? - 'info' after '?'
+color=blue (key - value pair) // & - separated by &
+age=22 (key - value pair)     // & - separated by &
+silly=yes (key - value pair)
+
+It is important, because some APIs will want us to INCLUDE some specific query strings in the requests, for example:
+
+Movie Search API:
+URL: /search/shows?q=:query  ==> this API wants us to set some key (q) - value pair
+
+Or can even request multiple key - value pairs for requests, for example:
+
+URL: /schedule?country="countrycode&date=:date
+
+***** HTTP Headers *****
+
+Headers is an additional way to passing some information with a request and either with a response
+
+They are also key - value pairs
+
+We can see them in the browser's devtools under 'Network' section
+
+! Some APIs are set up that way, that they requires us to send them User Headers in the request !
+
+For example:
+
+Accepted headers: 'Accept' (to get some specific response we need to set 'accept' header):
+
+- baseurl.com/text/html - set this to get HTML response
+- baseurl.com/application/json - set this to get JSON response
+- baseurl.com/text/plain - set this to get plain text response
+
+In this case key - value pair is:
+Accept - application/json (for example)
 
 
 
