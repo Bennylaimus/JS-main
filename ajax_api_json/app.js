@@ -40,18 +40,29 @@
 
 // Example:
 
-const loadStarWarsInfo = async () => {
-    try {                                  // remember to use try - catch construction to catch any error in async functions!
-        const response1 = await fetch("https://swapi.dev/api/people/1/")
-        const data1 = await response1.json();
-        console.log(data1);
-        const response2 = await fetch("https://swapi.dev/api/people/2/")
-        const data2 = await response2.json();
-        console.log(data2);
-    }
-    catch (error) {
-        console.log(error)
-    }
-};
+// const loadStarWarsInfo = async () => {
+//     try {                                  // remember to use try - catch construction to catch any error in async functions!
+//         const response1 = await fetch("https://swapi.dev/api/people/1/")
+//         const data1 = await response1.json();
+//         console.log(data1);
+//         const response2 = await fetch("https://swapi.dev/api/people/2/")
+//         const data2 = await response2.json();
+//         console.log(data2);
+//     }
+//     catch (error) {
+//         console.log(error)
+//     }
+// };
 
-loadStarWarsInfo();
+// loadStarWarsInfo();
+
+// Setting Headers with axios //
+// Some API requires us to include Headers in our GET request
+
+const getDadjoke = async () => {
+    const response = await axios.get("https://icanhazdadjoke.com/api")
+    console.log(response)
+}
+
+getDadjoke();
+
