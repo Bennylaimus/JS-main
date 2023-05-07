@@ -2,7 +2,7 @@
 // API we are working with (getting): 'https://swapi.dev/api/people/1/'
 
 //1 step:
-fetch("https://swapi.dev/api/people/1/"); // after we run this we get bacj a Promise (pending, fulfilled, response)
+// fetch("https://swapi.dev/api/people/1/"); // after we run this we get bacj a Promise (pending, fulfilled, response)
 
 //2 step:
 // As this is a Promise, we can actually use .then and .catch methods on it:
