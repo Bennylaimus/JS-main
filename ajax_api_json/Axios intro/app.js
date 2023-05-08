@@ -61,16 +61,49 @@
 
 //DOM manipulations:
 
-const jokesList = document.querySelector('#jokes_list');
+// const jokesList = document.querySelector('#jokes_list');
 
-const getDadJoke = async () => {
-    //First we can write this 'setting' on a separate like and save it to a variable, to make it looks cleaner:
-    const config = { headers: { Accept: 'application/json' } }; // we can add as many headers as we want after ','
-    const response = await axios.get("https://icanhazdadjoke.com/", config) // <=== and now we just pass our 'setting' as a second argument as required (.com, without api this time!!!)
-    console.log(response.data.joke) // <=== now we can access to a joke itself using Object access methods => data => joke .data.joke
+// const getDadJoke = async () => {
+//     //First we can write this 'setting' on a separate like and save it to a variable, to make it looks cleaner:
+//     const config = { headers: { Accept: 'application/json' } }; // we can add as many headers as we want after ','
+//     const response = await axios.get("https://icanhazdadjoke.com/", config) // <=== and now we just pass our 'setting' as a second argument as required (.com, without api this time!!!)
+//     console.log(response.data.joke) // <=== now we can access to a joke itself using Object access methods => data => joke .data.joke
+//     const newLI = document.createElement('li'); // <== creating a new <li><li> element on the page using document.createElement('li')
+//     newLI.append(response.data.joke) // <=== appending (adding) data (text) to this new created <li><li> (text is from response.data.joke)
+//     jokesList.append(newLI) // <=== finnaly appending (adding) this new, filled <li><li> element to out <ul><ul> list
+// }
+
+// getDadJoke();
+
+// Next step: we can split this code (function into 2 functions)!
+// 1st step - get a random joke, using API
+// 2nd step - add this random joke to a webpage
+
+
+const jokesList = document.querySelector('#joke_list');
+const button = document.querySelector('#btn');
+
+
+
+const addNewJoke = async () => {
+    const jokeText = await getDadJoke(); // first, we are calling getDadJoke() function to receive random joke via API and saving this joke's text to a variable
     const newLI = document.createElement('li'); // <== creating a new <li><li> element on the page using document.createElement('li')
-    newLI.append(response.data.joke) // <=== appending (adding) data (text) to this new created <li><li> (text is from response.data.joke)
+    newLI.append(jokeText) // <=== appending (adding) data (text) to this new created <li><li> (text is from response.data.joke)
     jokesList.append(newLI) // <=== finnaly appending (adding) this new, filled <li><li> element to out <ul><ul> list
 }
 
-getDadJoke();
+const getDadJoke = async () => {
+    try {
+        const config = { headers: { Accept: 'application/json' } }; // we can add as many headers as we want after ','
+        const response = await axios.get("https://icanhazdadjoke.com/", config) // <=== and now we just pass our 'setting' as a second argument as required (.com, without api this time!!!)
+        return response.data.joke // remember, async function returns a promise, so to make our addNewJoke() to be able to receive a promise, we can make this function to ne async, and return promise of getDadJoke() by making await getDadJoke()
+    } catch (error) {
+        return "Sorry! No new joke available!" // this text will be returned (and appended as text, if something will go wrong!)
+    }
+}
+
+
+//On click we calling addNewJoke, which calling getDadJoke
+// addEventListener should be called after we declared a fucntions it will use!
+button.addEventListener('click', addNewJoke);
+
