@@ -56,13 +56,3 @@
 
 // loadStarWarsInfo();
 
-// Setting Headers with axios //
-// Some API requires us to include Headers in our GET request
-
-const getDadjoke = async () => {
-    const response = await axios.get("https://icanhazdadjoke.com/api")
-    console.log(response)
-}
-
-getDadjoke();
-
