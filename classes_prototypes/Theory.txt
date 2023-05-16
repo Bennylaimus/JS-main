@@ -1,0 +1,85 @@
+// ================== 1st Lesson: Intro into prototypes =========================================== // 
+
+Prototypes are the mechanism by which JavaScript objects inherit features from one another.
+JavaScript often described as a prototype-based-language - to provide inheritance objects can have a
+prototype object, which acts as a template object that it inherits methods and properties from.
+
+Example:
+
+const arr = [1,2,3];
+const arr2 = [4,5,6];
+
+arr.includes(2) // true
+arr2.includes(5) // true
+
+Both arr and arr2 have 'built in' includes() method, which is stored in __proto__ property which is a reference to 'prototype',
+which stores all array / string methods
+
+Same have a DOM - for example:
+
+const doc = document.body
+console.dir(doc) // we will see some properties, that are specific to this exact body and a property __proto__ (HTMLBodyElement)
+
+*************************
+Array.prototype // shows all the prototypes Array have
+String.prototype // shows all the prototypes String have
+
+We can even define our own object prototype and set it as an Array prototype (and it will be available for all other arrays we will use)
+
+String.prototype.grumpus = () => {
+    alert('Go Away, you Grampus!') 
+}
+
+We have now added a grumpus() method to a String prototypes and this method will be seen by all other Strings
+
+Another example:
+
+String.prototype.grumpus = () => {
+    alert('Go Away you nasty Grumpus!');
+}
+
+const cat = 'Blue';
+cat.grumpus() // alert (Go Away ...)
+
+Another example:
+
+String.prototype.yell = function () {
+    console.log(this);
+}
+
+this - refers to 'anything', that is one the left (after.), in our case to String (String.yell) => (String.this)
+'hello'.yell (same as String.yell, 'hello'.this)
+console.log(this.toUpperCase) ===> 'hello'.toUpperCase()
+
+String.prototype.yell = function() => {
+    return OMG! `${this.toUpperCase()}` !!! OMGIIIII!
+}
+
+'I Love Piccas'.yell() // 'OMG! I LOVE PICCAS !!! OMGIIIII!'
+
+************************************************************
+
+We can even override some of the properties, for example override array.pop property:
+
+Array.prototype.pop = function () {
+    return 'I will never ever pop it up!' // will are now replacing the existing .pop method
+}
+
+const arr3 = [7, 8, 9];
+
+console.log(arr3.pop()); // output ==> 'I will never ever pop it up!'
+
+// ================== 2nd Lesson: Intro Into OOP & Factory Function ==================================== // 
+
+An OOP basically is a Object - Oriented - Programming: basically, there is one central idea:
+"Organizing our code, designing and structuring our application by breaking things up by a distinct patterns of objects, 
+giving them defined behavior, like recepies"
+
+We will create our own class (a 'recepie') with color name 'carrot' and rgb value for it (230, 126, 34)
+and we will be able to easiealy switch between different color systems (hsl, rgb, hex) and even choose
+opposite color to one we have
+
+Basically our navColor will have some added methods, like rgb(), rgba(), opposite()
+
+
+
