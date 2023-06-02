@@ -140,53 +140,79 @@
 // so with this.r = r, this.g = g, this.b = b we will be adding 'r', 'g' and 'b' to that new object
 // and then it 4) returns 'this' at the end.
 
-let result = new Color(255, 50, 200);
-console.log(result);
+// let result = new Color(255, 50, 200);
+// console.log(result);
 
-// What it also did - it 'created' a constructor function under the Protorype! And it is the second thing it does ('Step 2')
+// // What it also did - it 'created' a constructor function under the Protorype! And it is the second thing it does ('Step 2')
 
-function Color(r, g, b) {
-    this.r = r;
-    this.g = g;
-    this.b = b;
-    // this.rgb = function () {
-    //     const { r, g, b } = this;
-    //     return `rgb(${r}, ${g}, ${b})`
-    // }
-};
+// function Color(r, g, b) {
+//     this.r = r;
+//     this.g = g;
+//     this.b = b;
+//     // this.rgb = function () {
+//     //     const { r, g, b } = this;
+//     //     return `rgb(${r}, ${g}, ${b})`
+//     // }
+// };
 
-// Right now .rgb is still nod defined under Prototype - it is still as an unique copy of Color object
-// To make this work - we need to define this medhot OUTSIDE our Color obejct via .prptotype ===>
-// ===>
-Color.prototype.rgb = function () {
-    const { r, g, b } = this;
-    return `rgb(${r}, ${g}, ${b})`;
-};
+// // Right now .rgb is still nod defined under Prototype - it is still as an unique copy of Color object
+// // To make this work - we need to define this medhot OUTSIDE our Color obejct via .prptotype ===>
+// // ===>
+// Color.prototype.rgb = function () {
+//     const { r, g, b } = this;
+//     return `rgb(${r}, ${g}, ${b})`;
+// };
 
-Color.prototype.hex = function () {
-    const { r, g, b } = this;
-    return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-}
+// Color.prototype.hex = function () {
+//     const { r, g, b } = this;
+//     return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+// }
 
-// We can also create an alpha-chanel rgba
+// // We can also create an alpha-chanel rgba
 
-Color.prototype.rgba = function (a = 1.0) {
-    const { r, g, b } = this;
-    return `rgba(${r}, ${g}, ${b}, ${a})`;
-}
+// Color.prototype.rgba = function (a = 1.0) {
+//     const { r, g, b } = this;
+//     return `rgba(${r}, ${g}, ${b}, ${a})`;
+// }
 
-let color1 = new Color(200, 250, 40);
-console.log(color1) // an .rgb method now defines under the 'prototype'! and can we used by anothe objects!
+// let color1 = new Color(200, 250, 40);
+// console.log(color1) // an .rgb method now defines under the 'prototype'! and can we used by anothe objects!
 
-color1.rgb(); // and 'color1' object now have an access to .rgb() method via prototype
+// color1.rgb(); // and 'color1' object now have an access to .rgb() method via prototype
 
-let color2 = new Color(240, 200, 100);
-color2.rgb(); // and 'color2' object also now have an access to .rgb() method via prototype
+// let color2 = new Color(240, 200, 100);
+// color2.rgb(); // and 'color2' object also now have an access to .rgb() method via prototype
 
-let color3 = new Color(100, 50, 20,)
+// let color3 = new Color(100, 50, 20,)
 
 
-// document.body.style.backgroundColor = color1.rgb(); // <=== standard color from color1 variable (which is new Color(200, 250, 40))
-document.body.style.backgroundColor = color1.rgba(0.5); // <=== now we are using .rgba() method and passing (3) as an 'a' parametr
+// // document.body.style.backgroundColor = color1.rgb(); // <=== standard color from color1 variable (which is new Color(200, 250, 40))
+// document.body.style.backgroundColor = color1.rgba(0.5); // <=== now we are using .rgba() method and passing (3) as an 'a' parametr
 
 // ============================= 4th Lesson: Classes ==================================================================== //
+
+//*Syntax:
+
+class Color {                 // 1. We are using 'class' keyword with name (Uppercase)
+    constructor(r, g, b, name) {    // 2. We are always adding a 'constructor()' function (in this specific example it will be executer IMMIDEATELY after new Color created)
+        this.r = r;  // ====\         
+        this.g = g;  // ======  4. 'this' follows the same pattern as in the previos lesson (3rd Lesson), it creates a new object and this is refered to that new created object
+        this.b = b;  // ====/
+        this.name = name;
+    }
+    greet() {
+        return `Hello from ${this.name}!`; // 5. we can create methods inside classes (and in this case we need to use 'this' to access 'name' value in our created object, just like standart methods inside in an object do!)
+    }
+    // The greate part obout it, is that greet() method is now a method available for all objects (it is putted under the prototypes)
+    rgb() {
+        const { r, g, b } = this;
+        return `rgb(${r}, ${g}, ${b})`;
+    }
+    hex() {
+        const { r, g, b } = this;
+        return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+};
+
+const myColor = new Color(255, 30, 70, 'tomato');  // 3. creating a 'new' (the construction() function will run immideately as soon as we created a 'new' Color)
+const anotherColor = new Color(250, 100, 80);
