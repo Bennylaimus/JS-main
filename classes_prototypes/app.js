@@ -193,26 +193,206 @@
 
 //*Syntax:
 
-class Color {                 // 1. We are using 'class' keyword with name (Uppercase)
-    constructor(r, g, b, name) {    // 2. We are always adding a 'constructor()' function (in this specific example it will be executer IMMIDEATELY after new Color created)
-        this.r = r;  // ====\         
-        this.g = g;  // ======  4. 'this' follows the same pattern as in the previos lesson (3rd Lesson), it creates a new object and this is refered to that new created object
-        this.b = b;  // ====/
-        this.name = name;
+// class Color {                 // 1. We are using 'class' keyword with name (Uppercase)
+//     constructor(r, g, b, name) {    // 2. We are always adding a 'constructor()' function (in this specific example it will be executer IMMIDEATELY after new Color created)
+//         this.r = r;  // ====\         
+//         this.g = g;  // ======  4. 'this' follows the same pattern as in the previos lesson (3rd Lesson), it creates a new object and this is refered to that new created object
+//         this.b = b;  // ====/
+//         this.name = name;
+//     }
+//     greet() {
+//         return `Hello from ${this.name}!`; // 5. we can create methods inside classes (and in this case we need to use 'this' to access 'name' value in our created object, just like standart methods inside in an object do!)
+//     }
+//     // The greate part obout it, is that greet() method is now a method available for all objects (it is putted under the prototypes)
+//     rgb() {
+//         const { r, g, b } = this;
+//         return `rgb(${r}, ${g}, ${b})`;
+//     }
+//     hex() {
+//         const { r, g, b } = this;
+//         return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+//     }
+// };
+
+// const myColor = new Color(255, 30, 70, 'tomato');  // 3. creating a 'new' (the construction() function will run immideately as soon as we created a 'new' Color)
+// const anotherColor = new Color(250, 100, 80);
+
+// *Adding an rgbd() method and doing some refactory*
+
+// class Color {
+//     constructor(r, g, b, name) {
+//         this.r = r;
+//         this.g = g;
+//         this.b = b;
+//         this.name = name;
+//     }
+//     greet() {
+//         return `Hello from ${this.name}!`;
+//     }
+//     // Two repeatitive lines of code: rgb(${r}, ${g}, ${b})
+//     // Creating an inner function, which is responsible of returning 3 colors: (${r}, ${g}, ${b})
+//     innerRGB() {
+//         const { r, g, b } = this; // still needs an access to r, g, and b
+//         return `${r}, ${g}, ${b}` // will return only 3 colors, for example return will looks like: 225, 100, 150;
+//     }
+//     rgb() {
+//         return `rgb(${this.innerRGB()})`; // need to use this.innerRGB() to assecc to a returned innerRGB() values
+//     }
+//     rgba(a = 1.0) {
+//         return `rgba(${this.innerRGB()}, ${a})`; // neet to use 'this.innerRGB()' to access to a returned innerRGB() values
+//     }
+//     hex() {
+//         const { r, g, b } = this;
+//         return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+//     }
+// };
+
+// const myColor = new Color(255, 30, 70, 'tomato');  // 3. creating a 'new' (the construction() function will run immideately as soon as we created a 'new' Color)
+// const anotherColor = new Color(250, 100, 80);
+// const alphaColor = new Color(200, 100, 50);
+
+// console.log(anotherColor.rgb());
+// console.log(alphaColor.rgba(0.7));
+// console.log(anotherColor.hex());
+
+// *More class practice - adding a methods - adding an HSL color method to our Color class**
+
+//*Reminder: HSL(hue - оттенок, saturation - насыщенность, lightness - яркость)
+// Hue is a degree on the color wheel from 0 to 360. 0 is red, 120 is green, and 240 is blue.
+// Saturation is a percentage value. 0% means a shade of gray, and 100% is the full color.
+
+// The 'ready-funtion-from-stackoverflow' we are working with:
+
+// calcHSL() {
+//     let { r, g, b } = this;
+//     // Make r, g, and b fractions of 1
+//     r /= 255;
+//     g /= 255;
+//     b /= 255;
+
+//     // Find greatest and smallest channel values
+//     let cmin = Math.min(r, g, b),
+//         cmax = Math.max(r, g, b),
+//         delta = cmax - cmin,
+//         h = 0,
+//         s = 0,
+//         l = 0;
+//     if (delta == 0) h = 0;
+//     else if (cmax == r)
+//         // Red is max
+//         h = ((g - b) / delta) % 6;
+//     else if (cmax == g)
+//         // Green is max
+//         h = (b - r) / delta + 2;
+//     else
+//         // Blue is max
+//         h = (r - g) / delta + 4;
+
+//     h = Math.round(h * 60);
+
+//     // Make negative hues positive behind 360°
+//     if (h < 0) h += 360;
+//     // Calculate lightness
+//     l = (cmax + cmin) / 2;
+
+//     // Calculate saturation
+//     s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+
+//     // Multiply l and s by 100
+//     s = +(s * 100).toFixed(1);
+//     l = +(l * 100).toFixed(1);
+//     this.h = h;
+//     this.s = s;
+//     this.l = l;
+// }
+
+// ******** So let's start working and add an calcHSL() to our Color class
+
+class Color {
+    constructor(r, g, b) {
+        this.r = r;
+        this.g = g;
+        this.b = b;
+        this.calcHSL(); // **** 3) we can call an added method instantly from constructor
     }
-    greet() {
-        return `Hello from ${this.name}!`; // 5. we can create methods inside classes (and in this case we need to use 'this' to access 'name' value in our created object, just like standart methods inside in an object do!)
+    // **** 5) So, let's create our own hsl() function, which will return something:
+    // Мы создаём этот метод для того, чтобы, когда calcHSL() метод выполнится (а он выполнится сразу, посколько мы 'засунули')
+    // его в constructor() и сразу что-то вернёт (а вернёт он некие значения 'h s l'), чтобы у нас был доспут к этим 'h s l' мы 
+    // в функции hsl() через 'this' получаем доступ к этим возвращённым значениям 'h s l' и возвращаем уже с помощью return в hsl() 
+    hsl() {
+        let { h, s, l } = this;
+        return `hsl(${h}, ${s}%, ${l}%)`;
     }
-    // The greate part obout it, is that greet() method is now a method available for all objects (it is putted under the prototypes)
-    rgb() {
-        const { r, g, b } = this;
-        return `rgb(${r}, ${g}, ${b})`;
+    // **** 6) Then, we can create another method called opposite(), which will generate opposite hsl color,
+    // To do this we need just to add +180 to current 'h(hue)' we have in hsl()
+    opposite() {
+        let { h, s, l } = this;
+        let newHue = (h + 180) % 360;
+        return `hsl(${newHue}, ${s}%, ${l}%)`;
     }
-    hex() {
-        const { r, g, b } = this;
-        return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    // **** 7) Lastly, we can add another method called 'fullySaturated' which will saturate provided color by 100%:
+    fullySaturated() {
+        let { h, l } = this;
+        return `hsl(${h}, 100%, ${l}%)`;
+    }
+    calcHSL() {
+        let { r, g, b } = this;    // *** 1) First, we need to 'grand access' to 'r g and b' by 'connectiong' them to 'this' as we ded before, as we will nedd this values later to settle our code
+        // Make r, g, and b fractions of 1
+        r /= 255;
+        g /= 255;
+        b /= 255;
+
+        // Find greatest and smallest channel values
+        let cmin = Math.min(r, g, b),
+            cmax = Math.max(r, g, b),
+            delta = cmax - cmin,
+            h = 0,
+            s = 0,
+            l = 0;
+        if (delta == 0) h = 0;
+        else if (cmax == r)
+            // Red is max
+            h = ((g - b) / delta) % 6;
+        else if (cmax == g)
+            // Green is max
+            h = (b - r) / delta + 2;
+        else
+            // Blue is max
+            h = (r - g) / delta + 4;
+
+        h = Math.round(h * 60);
+
+        // Make negative hues positive behind 360°
+        if (h < 0) h += 360;
+        // Calculate lightness
+        l = (cmax + cmin) / 2;
+
+        // Calculate saturation
+        s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+
+        // Multiply l and s by 100
+        s = +(s * 100).toFixed(1);
+        l = +(l * 100).toFixed(1);
+        // ****** 2) as we also will need an access to ''h, s and l' value we also need to 'grand' them access via 'this'
+        this.h = h;
+        this.s = s;
+        this.l = l;
     }
 };
 
-const myColor = new Color(255, 30, 70, 'tomato');  // 3. creating a 'new' (the construction() function will run immideately as soon as we created a 'new' Color)
-const anotherColor = new Color(250, 100, 80);
+let hslTest = new Color(200, 100, 20);
+console.log(hslTest.calcHSL()); // ***** 4) will be 'undefined' as we don't return anything
+console.log(hslTest);
+console.log(hslTest.hsl());
+// document.body.style.backgroundColor = hslTest.hsl();
+
+// *Testing opposite();
+
+console.log(hslTest.opposite());
+document.body.style.backgroundColor = hslTest.opposite();
+
+// *Testing fullySaturated():
+
+let fullySat = new Color(120, 10, 250);
+console.log(fullySat.fullySaturated());
+
