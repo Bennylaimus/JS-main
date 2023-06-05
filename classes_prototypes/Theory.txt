@@ -233,3 +233,293 @@ let color3 = new Color(100, 50, 20,)
 
 document.body.style.backgroundColor = color1.rgb(); // <=== standard color from color1 variable (which is new Color(200, 250, 40))
 document.body.style.backgroundColor = color1.rgba(0.5); // <=== now we are using .rgba() method and passing (3) as an 'a' parametr
+
+// ============================= 4th Lesson: Classes ==================================================================== //
+
+*Syntax:
+
+ class Color {                       // 1. We are using 'class' keyword with name (Uppercase)
+     constructor(r, g, b, name) {    // 2. We are always adding a 'constructor()' function (in this specific example it will be executer IMMIDEATELY after new Color created)
+         this.r = r;  // ====\         
+         this.g = g;  // ======      // 4. 'this' follows the same pattern as in the previos lesson (3rd Lesson), it creates a new object and this is refered to that new created object
+         this.b = b;  // ====/
+         this.name = name;
+     }
+     greet() {
+         return `Hello from ${this.name}!`; // 5. we can create methods inside classes (and in this case we need to use 'this' to access 'name' value in our created object, just like standart methods inside in an object do!)
+     }
+     The greate part obout it, is that greet() method is now a method available for all objects (it is putted under the prototypes)
+     rgb() {
+         const { r, g, b } = this;
+         return `rgb(${r}, ${g}, ${b})`;
+     }
+     hex() {
+         const { r, g, b } = this;
+         return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+     }
+ };
+
+const myColor = new Color(255, 30, 70, 'tomato');  // 3. creating a 'new' (the construction() function will run immideately as soon as we created a 'new' Color)
+const anotherColor = new Color(250, 100, 80);
+
+*Adding an rgbd() method and doing some refactory*
+
+ class Color {
+     constructor(r, g, b, name) {
+         this.r = r;
+         this.g = g;
+         this.b = b;
+         this.name = name;
+     }
+     greet() {
+         return `Hello from ${this.name}!`;
+     }
+     Two repeatitive lines of code: rgb(${r}, ${g}, ${b})
+     Creating an inner function, which is responsible of returning 3 colors: (${r}, ${g}, ${b})
+      innerRGB() {
+         const { r, g, b } = this; // still needs an access to r, g, and b
+         return `${r}, ${g}, ${b}` // will return only 3 colors, for example return will looks like: 225, 100, 150;
+     }
+     rgb() {
+         return `rgb(${this.innerRGB()})`; // need to use this.innerRGB() to assecc to a returned innerRGB() values
+     }
+     rgba(a = 1.0) {
+         return `rgba(${this.innerRGB()}, ${a})`; // neet to use 'this.innerRGB()' to access to a returned innerRGB() values
+     }
+     hex() {
+         const { r, g, b } = this;
+         return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+     }
+ };
+
+const myColor = new Color(255, 30, 70, 'tomato');  // 3. creating a 'new' (the construction() function will run immideately as soon as we created a 'new' Color)
+const anotherColor = new Color(250, 100, 80);
+const alphaColor = new Color(200, 100, 50);
+
+console.log(anotherColor.rgb());
+console.log(alphaColor.rgba(0.7));
+console.log(anotherColor.hex());
+
+*More class practice - adding a methods - adding an HSL color method to our Color class**
+
+*Reminder: HSL(hue - оттенок, saturation - насыщенность, lightness - яркость)
+Hue is a degree on the color wheel from 0 to 360. 0 is red, 120 is green, and 240 is blue.
+Saturation is a percentage value. 0% means a shade of gray, and 100% is the full color.
+
+The 'ready-funtion-from-stackoverflow' we are working with:
+
+ calcHSL() {
+     let { r, g, b } = this;
+     // Make r, g, and b fractions of 1
+     r /= 255;
+     g /= 255;
+     b /= 255;
+
+     // Find greatest and smallest channel values
+     let cmin = Math.min(r, g, b),
+         cmax = Math.max(r, g, b),
+         delta = cmax - cmin,
+         h = 0,
+         s = 0,
+         l = 0;
+     if (delta == 0) h = 0;
+     else if (cmax == r)
+         // Red is max
+         h = ((g - b) / delta) % 6;
+     else if (cmax == g)
+         // Green is max
+         h = (b - r) / delta + 2;
+     else
+         // Blue is max
+         h = (r - g) / delta + 4;
+
+     h = Math.round(h * 60);
+
+     // Make negative hues positive behind 360°
+     if (h < 0) h += 360;
+    // Calculate lightness
+     l = (cmax + cmin) / 2;
+
+     Calculate saturation:
+     s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+
+     // Multiply l and s by 100
+     s = +(s * 100).toFixed(1);
+     l = +(l * 100).toFixed(1);
+     this.h = h;
+     this.s = s;
+     this.l = l;
+ }
+
+******** So let's start working and add an calcHSL() to our Color class
+
+class Color {
+    constructor(r, g, b) {
+        this.r = r;
+        this.g = g;
+        this.b = b;
+        this.calcHSL(); // **** 3) we can call an added method instantly from constructor
+    }
+    **** 5) So, let's create our own hsl() function, which will return something:
+    Мы создаём этот метод для того, чтобы, когда calcHSL() метод выполнится (а он выполнится сразу, посколько мы 'засунули')
+    его в constructor() и сразу что-то вернёт (а вернёт он некие значения 'h s l'), чтобы у нас был доспут к этим 'h s l' мы 
+    в функции hsl() через 'this' получаем доступ к этим возвращённым значениям 'h s l' и возвращаем уже с помощью return в hsl() 
+    hsl() {
+        let { h, s, l } = this;
+        return `hsl(${h}, ${s}%, ${l}%)`;
+    }
+    **** 6) Then, we can create another method called opposite(), which will generate opposite hsl color,
+    To do this we need just to add +180 to current 'h(hue)' we have in hsl()
+    opposite() {
+        let { h, s, l } = this;
+        let newHue = (h + 180) % 360;
+        return `hsl(${newHue}, ${s}%, ${l}%)`;
+    }
+    **** 7) Lastly, we can add another method called 'fullySaturated' which will saturate provided color by 100%:
+    fullySaturated() {
+        let { h, l } = this;
+        return `hsl(${h}, 100%, ${l}%)`;
+    }
+    calcHSL() {
+        let { r, g, b } = this;    // *** 1) First, we need to 'grand access' to 'r g and b' by 'connectiong' them to 'this' as we ded before, as we will nedd this values later to settle our code
+        // Make r, g, and b fractions of 1
+        r /= 255;
+        g /= 255;
+        b /= 255;
+
+        Find greatest and smallest channel values:
+        let cmin = Math.min(r, g, b),
+            cmax = Math.max(r, g, b),
+            delta = cmax - cmin,
+            h = 0,
+            s = 0,
+            l = 0;
+        if (delta == 0) h = 0;
+        else if (cmax == r)
+            // Red is max
+            h = ((g - b) / delta) % 6;
+        else if (cmax == g)
+            // Green is max
+            h = (b - r) / delta + 2;
+        else
+            // Blue is max
+            h = (r - g) / delta + 4;
+
+        h = Math.round(h * 60);
+
+        Make negative hues positive behind 360°:
+        if (h < 0) h += 360;
+        // Calculate lightness
+        l = (cmax + cmin) / 2;
+
+        // Calculate saturation
+        s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+
+        // Multiply l and s by 100
+        s = +(s * 100).toFixed(1);
+        l = +(l * 100).toFixed(1);
+        // ****** 2) as we also will need an access to ''h, s and l' value we also need to 'grand' them access via 'this'
+        this.h = h;
+        this.s = s;
+        this.l = l;
+    }
+};
+
+let hslTest = new Color(200, 100, 20);
+console.log(hslTest.calcHSL()); // ***** 4) will be 'undefined' as we don't return anything
+console.log(hslTest);
+console.log(hslTest.hsl());
+document.body.style.backgroundColor = hslTest.hsl();
+
+***Testing opposite();
+
+console.log(hslTest.opposite());
+document.body.style.backgroundColor = hslTest.opposite();
+
+***Testing fullySaturated():
+
+let fullySat = new Color(120, 10, 250);
+console.log(fullySat.fullySaturated());
+
+// ============================ 5th Lesson: 'extends' and 'super' keywords ================================== //
+
+Example:
+
+1. Define 2 very similar classes with very similar values and methods:
+
+class Cat {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    eat() {
+        return `${this.name} eats food!`
+    }
+    meaw() {
+        return 'Meaaauu!'
+    }
+}
+
+
+class Dog {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    eat() {
+        return `${this.name} eats food!`
+    }
+    bark() {
+        return 'Aggrrr!'
+    }
+}
+
+2. This lines of codes are similar and repetative!
+
+ constructor(name, age) {
+     this.name = name;
+     this.age = age;
+ }
+ eat() {
+     return `${this.name} eats food!`
+ }
+
+So we can put the in one separate class, let's call this class 'Pet'
+and remove the from our two 'subclasses' - 'Cat' and 'Dog'
+but if we want this 2 classes 'Cat' and 'Dog' to still have an access to main class 'Pet' we need to use 
+a 'extends' keyword:
+
+class Pet {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    eat() {
+        return `${this.name} eats food!`
+    }
+};
+
+class Cat extends Pet {  // in this case class 'Cat' extends from 'Pet' and have acces to 'Pet' constructor() values
+    meaw() {             // class 'Cat' have only his own method left and all other values can be extended and accessed from 'Pet'
+        return 'Meaaauu!'
+    }
+}
+Now we can call 'Cat' and use some values, that are stored in 'Pet' constructor()
+const myCat = new Cat('monty', 10); // return 'Cat' object with values
+
+class Dog extends Pet { // in this case class 'Dog' extends from 'Pet' and have acces to 'Pet' constructor() values
+    bark() {            // class 'Dog' have only his own method left and all other values can be extended and accessed from 'Pet'
+        return 'Aggrrr!'
+    }
+}
+
+But if we want to add another constructor in the 'Cat' class and still use some values stored in 'Pet' class constructor
+we need to use keyword 'super', syntax is the following:
+
+class Cat extends Pet {
+    constructor(name, age, maxLives = 9) { // setting some specific 'cat-only' parametr to 'Cat' class (maxLives = 9)
+        super(name, age) // we are 'telling' 'Cat' class constrictor() to access specific values (name and age) from 'Pet' class constructor
+        this.lives = maxLives; // and at the same time we can set 'Cat's class own this.lives via this 
+    }
+}
+and meaw() method in this case will be accesed by 'Cat' class from 'Pet' class automatically, because of 'extends' keyword

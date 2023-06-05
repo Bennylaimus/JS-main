@@ -396,3 +396,89 @@ document.body.style.backgroundColor = hslTest.opposite();
 let fullySat = new Color(120, 10, 250);
 console.log(fullySat.fullySaturated());
 
+// ============================ 5th Lesson: 'extends' and 'super' keywords ================================== //
+
+//Example:
+
+// 1. Define 2 very similar classes with very similar values and methods:
+
+class Cat {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    eat() {
+        return `${this.name} eats food!`
+    }
+    meaw() {
+        return 'Meaaauu!'
+    }
+}
+
+
+class Dog {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    eat() {
+        return `${this.name} eats food!`
+    }
+    bark() {
+        return 'Aggrrr!'
+    }
+}
+
+// 2. This lines of codes are similar and repetative!
+
+// constructor(name, age) {
+//     this.name = name;
+//     this.age = age;
+// }
+// eat() {
+//     return `${this.name} eats food!`
+// }
+
+// So we can put the in one separate class, let's call this class 'Pet'
+// and remove the from our two 'subclasses' - 'Cat' and 'Dog'
+// but if we want this 2 classes 'Cat' and 'Dog' to still have an access to main class 'Pet' we need to use 
+// a 'extends' keyword:
+
+class Pet {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    eat() {
+        return `${this.name} eats food!`
+    }
+};
+
+class Cat extends Pet {  // in this case class 'Cat' extends from 'Pet' and have acces to 'Pet' constructor() values
+    meaw() {             // class 'Cat' have only his own method left and all other values can be extended and accessed from 'Pet'
+        return 'Meaaauu!'
+    }
+}
+// Now we can call 'Cat' and use some values, that are stored in 'Pet' constructor()
+// const myCat = new Cat('monty', 10); // return 'Cat' object with values
+
+class Dog extends Pet { // in this case class 'Dog' extends from 'Pet' and have acces to 'Pet' constructor() values
+    bark() {            // class 'Dog' have only his own method left and all other values can be extended and accessed from 'Pet'
+        return 'Aggrrr!'
+    }
+}
+
+// But if we want to add another constructor in the 'Cat' class and still use some values stored in 'Pet' class constructor
+// we need to use keyword 'super', syntax is the following:
+
+class Cat extends Pet {
+    constructor(name, age, maxLives = 9) { // setting some specific 'cat-only' parametr to 'Cat' class (maxLives = 9)
+        super(name, age) // we are 'telling' 'Cat' class constrictor() to access specific values (name and age) from 'Pet' class constructor
+        this.lives = maxLives; // and at the same time we can set 'Cat's class own this.lives via this 
+    }
+}
+// and meaw() method in this case will be accesed by 'Cat' class from 'Pet' class automatically, because of 'extends' keyword
+
+
+
+
