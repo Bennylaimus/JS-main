@@ -1,0 +1,40 @@
+***1. Introducing of Node.js****
+
+Until recentrly, we could run JavaScript code in a web browser.
+Node is a JavaScript runtime that executes code OUTSIDE OF THE browser
+
+We can use the same JavaScript syntax we know and love to write SERVER-SIDE CODE,
+instead of relying on other languages like Python or Ruby.
+
+***2. Node REPL***
+
+REPL stands for Read Evaluate Print loop.
+Inside a Node REPL we can type a JavaScripts commands (we are now in the 'word of JavaScript')
+
+For example:
+1 + 2 // 3
+'hello' + 'world' // 'helloworld'
+
+But some browser staff doesn't exist in REPL, for example global 'window' objects
+Instead of 'browser's' window REPL has his own object - called 'global'
+
+NEW stuff in Node.js REPL:
+Node comes with a buch of build-in modules that don't exist in the browser.
+These modules help us do things like interact with the operating sustem and files/folders.
+
+NOT included in the Node.js REPL:
+Because Node does not run in a browser, we don't habe access to all the browser "stuff".
+The 'window', 'document' and DOM API's are not a thing in Node!
+
+***3 Running the Node files (running files with node)***
+
+We can run JS files (from our VSCode for example) in the terminal (in the general Bash terminal, not in the Node REPL)
+by using keyword 'node'
+1) Create a file in the basic terminal (Bash terminal) touch myfile.js
+2) Open this created file in the VSCode and write some JS code there (for loop for example)
+3) Execute the JS code in ther file in the terminal (Bash terminal) by saying: 'node myfile.js'
+
+You can also indicate a longer 'way' to that file, for example: node JavaScript/myfile.js
+
+
+
