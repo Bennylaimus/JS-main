@@ -37,4 +37,59 @@ by using keyword 'node'
 You can also indicate a longer 'way' to that file, for example: node JavaScript/myfile.js
 
 
+**** 4) Process and argv ****
+
+ - you can use Node.js in your standart bash terminal - to do it simply type 'node'
+ - to exit from 'node' mode just type '.exit' (and you are bacj in a standart bash terminal (where commands like 'ls', 'cd', etc. works))
+ - to check your current Node.js version simply type 'node'. Or even better type 'node -v' - you find out version AND will NOT switch to 'node' mode
+
+In Node.js docs you can find a lot of stuff, but now we're talking about 'process'.
+'process' is an object - it provides information about, and control over, the current Node.js process.
+and it have a lot of .methods(), for example:
+
+ - process.version;
+ - process.cwd() (stands for current working directory) - the 'place' I'am currently running Node.js
+
+ We are checking something called 'process.argv'
+ process.agrv is not very useful if we run it from Node REPL, but it might be quite useful, if we run it from standard bash terminal
+
+ 1. process.argv by itself runs a string ('C:\\Program Files (x86)\\node.exe') in my case
+ 2. In a standart bash terminal we can create js file with, for example 'touch argv.js'
+ 3. In newly created 'argv.js' file we can console.log(process.argv) an output would be
+ [
+  'C:\\Program Files (x86)\\node.exe',
+  'C:\\Users\\User\\Desktop\\Andrey\\JavaScrips\\JS-main\\node.js\\argv.js' <=== this is pointing on our present working directory and a file (argv.js)!
+]
+
+Basically the 'process.ergv' returns an array containing the command line arguments
+passed when the Node.js process was launched.
+The first element will be process.execPath (the path where Node.js is executed (in C:\\Program Files (x86)\\node.exe in my case))
+The second value will always be a file, that we are executing (C:\\Users\\User\\Desktop\\Andrey\\JavaScrips\\JS-main\\node.js\\argv.js in my case)
+*Any remainung argument will be addition command line arguments!*
+
+So, if I would write node argv.js dogs cats chickens an output would be:
+[
+  'C:\\Program Files (x86)\\node.exe', <=== first is always a execPath
+  'C:\\Users\\User\\Desktop\\Andrey\\JavaScrips\\JS-main\\node.js\\argv.js' <=== second is always a file,
+  'dogs',
+  'cats',
+  'chickens'
+]
+
+Example:
+
+1. Create a js file in bash terminal like 'touch greet.js'
+2. Inside a newly created file try to use following js code
+
+const arguments = process.argv.slice(2) // we're slicing 2 first array indexes we don't need (which is execPath(1) and working file(2))
+for(let argument of arguments) {
+    console.log(`Hey there ${argument}`); // and now we're looping over all argument in arguments and printing out argument in bash terminal    
+}
+
+How to get this argument?
+
+3. We are writing (passing) them throuch bash terminal via 'node greet.js jura mami vladi andri' ==>
+==> then this argument we write are 'filtred' via 'process.argv' in our greet.js file
+
+
 
