@@ -91,5 +91,66 @@ How to get this argument?
 3. We are writing (passing) them throuch bash terminal via 'node greet.js jura mami vladi andri' ==>
 ==> then this argument we write are 'filtred' via 'process.argv' in our greet.js file
 
+**** 5) File system (fs) / modules ****
+
+All file system operations have synchronous and asynchronous versions
+We will use synchronous version in this example
+
+Example: will create a script, that will create for us a folder and this folde will containg 3 main files:
+Goal is:
+
+1. To run a command 'node myscript.js Folder' (where 'Folder' is the name of the folder we want to create)
+2. This created folder ('Folder') will contain inside 3 files:
+ - index.html
+ - styles.css
+ - app.js
+
+ To do this we need:
+
+ 1. Create a file (a .js file which will hold our script) - touch myscript.js;
+ 2. Then we will need to create a folder. We can to it with fs.mkdirSync (we using synchronous version). Here is a syntax from Node.js docs:
+
+fs.mkdirSync('/tmp/a/apple', { recursive: true }, (err) => {
+  if (err) throw err;
+});
+
+! But we will run a problem here immideately as 'fs' in not a thing by default (like 'process' for example),
+'fs' is a module, that we actually need to 'require' first, before we wil be able to use it!
+To do this we need to use command:       const fs = require('fs');
+
+3. Now, after setting fs.mkdir we can create a folders!
+   And to access our newly created folder rights immideately after we create is, 
+   we can add process.argv[2] in our scrypt file (myscript.js) and save it to a variable ==>
+   ==> const folderName = process.argv[2]; (we can even provide some default folder name in case, if it will not be defined through node myscript.js (Folder)),
+   to do it we can use: const folderName = process.argv[2] || 'NewFolder' (so, if only 'node myscript.js' will be typed the default 'NewFolder' folder will be created anyway)
+   [2] - we will access index 2 (3rd item) of 'process.argv' array
+   (because remember - 1st index in always a node Path, 2nd index is our executing file and 3rd index is our 'argument', that we pass)
+   So, after adding 'process.argv[2]' and run command node myscript.js Folder1 - we will create a 'Folder1' folder and access it right after creation.
+
+4. Now we want to create and add 3 files in our newly created folder, to do this we can use 'fs.writeFileSync' ==>
+   
+   Syntax is:
+
+   fs.writeFileSync(`${folderName}/index.html`);
+   fs.writeFileSync(`${folderName}/styles.css`);
+   fs.writeFileSync(`${folderName}/app.js`);
+   (we are adding these 3 files in a newly created folder via folderName/)
+
+   And we definately need to handle some errors during the creations and adding file, so we can add some 'try' / 'catch':
+
+   try {
+    fs.mkdirSync(folderName);
+    fs.writeFileSync(`${folderName}/index.html`) // !you may want to write this code folowing to avaid Node.js errors! fs.writeFileSync(`${folderName}/index.html`, '');
+    fs.writeFileSync(`${folderName}/styles.css`)
+    fs.writeFileSync(`${folderName}/app.js`)
+  } catch (error) {
+    console.log(error)
+  } 
+  
+
+
+
+
+
 
 
