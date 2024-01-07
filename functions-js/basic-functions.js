@@ -21,7 +21,7 @@ function greed(firstName) { // <=== this is a PARAMETR
     console.log(`First Name is ${firstName}`);
 };
 
-greed('Elvis'); // firstName now holds 'Elvis', when we call function and pass something in - this is an ARGUMENT!
+greed('Elvis'); // firstName now holds 'Elvis', when we call function and pass something in - this is an ARGUMENT! (in this case 'Elvis' is an argument)
 
 function rant(message) {
     console.log(message.toUpperCase());
@@ -54,7 +54,7 @@ summ(3, 4) // will RETURN 7
 let summary = summ(3, 4) // and 7 now can be stored in a variable!
 summary // 7
 
-//*Important* - ETURN Keyword returns a value and actualy stops an execution of a function!
+//*Important* - RETURN Keyword returns a value and actualy stops an execution of a function!
 
 function addingNums(num1, num2) {
     if (typeof num1 !== 'number' || typeof num2 !== 'number') {
@@ -142,7 +142,7 @@ if (radius > 0) {
 }
 console.log(radius) // ===> 8;
 // console.log(PI) // ===> Error, variable NOT defined (it's in an if BLOCK!)
-// console.log(message) // ===> Error, varianble NO defined (it's in an if BLOCK!)
+// console.log(message) // ===> Error, varianble NOT defined (it's in an if BLOCK!)
 
 
 for (let i = 0; i < 3; i++) {
@@ -187,9 +187,9 @@ summarize(3, 4); // ===> 7 (to call a function we use variable it's stored in)
 
 //*Acepting function as an argument*//
 
-function callTwice(func) {
-    func();
-    func();
+function callTwice(func) { // 'func' is actually a rollDie() function
+    func(); // ===> same as rollDie + () // rollDie()
+    func(); // ===> same as rollDie + () // rollDie()
 }
 
 function rollDie() {
@@ -215,7 +215,7 @@ function makeMisteryFunc() {
     const randomNum = Math.random();
     if (randomNum > 0.5) {
         return function () {
-            console.log('Sorry, this is a lose finction, ahaha!');
+            console.log('Sorry, this is a lose function, ahaha!');
         }
     } else {
         return function () {
@@ -239,24 +239,28 @@ mystery(); // now this will run only function() - thst is what makeMisteryFunc()
 
 function makeBetweenFunc(min, max) {
     return function (num) {
-        return num >= min && num <= max
+        if (num >= min && num <= max) {
+            return 'Number is in the scope'
+        }
+        return 'Number is outside of the scope'
     }
 }
 
-makeBetweenFunc(100, 200); // we are calling a functions with 100 and 200 parametrs
+const isBetween = makeBetweenFunc(100, 200);
+console.log(isBetween(150));
 
-// 2 step makeBetweenFunc(min, max) after calling is going to return ===>
+// step 1 ===> makeBetweenFunc(min, max) after calling is going to return ===>
 
 //function (num) {
 //return num >= 100 && num <= 200
 //}
 
-// step 3 - but to RUN function (num) we nned to save it in a variable!
+// step 2 - but to RUN function (num) we need to save it in a variable!
 
-// step 4 - so we are goind this:
-// const isBetween = makeBetweenFunc(min, max) - we are saving the RETURN of the makeBetweenFunc(min, max) (which is function (num)....) to varianble isBetween!
+// step 3 - so we are going to do this:
+// const isBetween = makeBetweenFunc(min, max) - we are saving the RETURN of the makeBetweenFunc(min, max) (which is function (num) {return...}) to varianble isBetween!
 
-// step 5 - isBetween(10) - function(num) will now looks like this (function(10)) amd it WILL USE (min and max from the previous, higher function)
+// step 4 - isBetween(10) - function(num) will now looks like this (function(10)) and it WILL USE (min and max from the previous, higher function)
 
 //** Object methods **//
 
@@ -290,7 +294,7 @@ info.total(5, 7)// output 12;
 
 //** Keyword THIS**//
 
-//*Use the keywprd THIS to access other properties on the same object*//
+//*Use the keyword THIS to access other properties on the same object*//
 
 const person = {
     first: 'Robert',
@@ -301,8 +305,8 @@ const person = {
 };
 
 person.fullName(); // Robert Pattison (we can access other object properties, because of keyword this!)
-person.last = 'Plant'; // we can change some object proberty
-person.fullName(); // Robert Plant (and the access changed propertie once again by using keyword this) 
+person.last = 'Plant'; // we can change some object property
+person.fullName(); // Robert Plant (and now access changed property once again by using keyword this) 
 
 //!! IMPORTANT !!//
 
@@ -342,12 +346,12 @@ console.log(hen.eggCount);
 //     hello.toUpperCase();
 // }
 
-// 2. Catch - it this part we define what will happen, if the code putted in TRY will cause an error:
+// 2. Catch - in this part we define what will happen, if the code putted in TRY will cause an error:
 
 try {
     hello.toLowerCase(); // <=== this will cause an error
 } catch {
-    console.log('Warning! An Error Detected!'); // <=== sothis part will run
+    console.log('Warning! An Error Detected!'); // <=== so this part will run
 }
 
 // 3. The error in try {} will be defined and code will CONTINUE to run!
