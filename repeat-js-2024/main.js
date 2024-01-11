@@ -117,38 +117,149 @@
 
 // myRequest('dogs.com/page1')
 
-const delayedColor = (color) => {
+// const delayedColor = (color) => {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             resolve(document.body.style.backgroundColor = color)
+//         }, 1500)
+//     })
+// };
+
+// delayedColor('red')
+//     .then(() => {
+//         return delayedColor('blue')
+//     })
+//     .then(() => {
+//         return delayedColor('orange')
+//     })
+//     .then(() => {
+//         return delayedColor('blue')
+//     })
+//     .then(() => {
+//         return delayedColor('aquamarine')
+//     })
+//     .then(() => {
+//         return delayedColor('orange')
+//     })
+//     .then(() => {
+//         return delayedColor('olive')
+//     })
+//     .then(() => {
+//         return delayedColor('yellow')
+//     })
+
+// =============================================================================
+
+// async function hello() {
+
+// };
+
+// const singSong = async () => {
+//     throw new Error('Promise is rejected');
+//     return 'LA LA LA LA LA LA LA'
+// };
+
+// singSong()
+//     .then((data) => {
+//         console.log('Promise resolved with following data:', data);
+//     }).catch((error) => {
+//         console.log('Promise is rejected with Error:', error);
+//     })
+
+// const login = async (username, password) => {
+//     if (!username || !password) {
+//         throw ('Missing username or password')
+//     } else if (password === 'Andrew') {
+//         return (`Welcome, ${username}`)
+//     } else {
+//         throw ('invalid password')
+//     }
+// };
+
+
+// login('Anrjusha', 'Andrew')
+//     .catch((loginMessageOne) => {
+//         console.log('Sorry,', loginMessageOne, 'please, try again')
+//     })
+//     .then((successLoginMessage) => {
+//         console.log(successLoginMessage)
+//     })
+//     .catch((unSuccessfullLoginMessageTwo) => {
+//         console.log('Sorry', unSuccessfullLoginMessageTwo, 'please, try again')
+//     })
+
+
+// const delayedColor = (color) => {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             resolve(document.body.style.backgroundColor = color)
+//         }, 1500)
+//     })
+// };
+
+// delayedColor('red')
+//     .then(() => {
+//         return delayedColor('blue')
+//     })
+//     .then(() => {
+//         return delayedColor('orange')
+//     })
+//     .then(() => {
+//         return delayedColor('blue')
+//     })
+//     .then(() => {
+//         return delayedColor('aquamarine')
+//     })
+//     .then(() => {
+//         return delayedColor('orange')
+//     })
+//     .then(() => {
+//         return delayedColor('olive')
+//     })
+//     .then(() => {
+//         return delayedColor('yellow')
+//     })
+
+// async function rainbow() {
+//     await delayedColor('red');
+//     await delayedColor('orange');
+//     await delayedColor('magenta');
+//     await delayedColor('tomato');
+//     await delayedColor('aquamarine');
+//     return 'ALL DONE'
+// };
+
+// async function finisher() {
+//     await rainbow().then((messageOne) => { console.log(messageOne) })
+//     return 'CONGRATULATIONS!'
+// }
+
+// finisher().then((messageTwo) => { console.log(messageTwo) });
+
+const fakeRequestPromise = (url) => {
     return new Promise((resolve, reject) => {
+        const delay = Math.floor(Math.random() * (2000)) + 500;
         setTimeout(() => {
-            resolve(document.body.style.backgroundColor = color)
-        }, 1500)
+            if (delay > 2000) {
+                reject('Connection timeout');
+            } else {
+                resolve(`Here is your data from ${url}`)
+            }
+        }, delay)
     })
-};
+}
 
-delayedColor('red')
-    .then(() => {
-        return delayedColor('blue')
-    })
-    .then(() => {
-        return delayedColor('orange')
-    })
-    .then(() => {
-        return delayedColor('blue')
-    })
-    .then(() => {
-        return delayedColor('aquamarine')
-    })
-    .then(() => {
-        return delayedColor('orange')
-    })
-    .then(() => {
-        return delayedColor('olive')
-    })
-    .then(() => {
-        return delayedColor('yellow')
-    })
+async function makeTwoRequests() {
+    try {
+        let data1 = await fakeRequestPromise('books.com/page1')
+        console.log(data1)
+        let data2 = await fakeRequestPromise('books.com/page2')
+        console.log(data2)
+    }
+    catch (error) {
+        console.log('An Error Occured:', error)
+    }
+}
 
-
-
-
+makeTwoRequests();
 
