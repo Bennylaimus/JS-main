@@ -236,30 +236,182 @@
 
 // finisher().then((messageTwo) => { console.log(messageTwo) });
 
-const fakeRequestPromise = (url) => {
-    return new Promise((resolve, reject) => {
-        const delay = Math.floor(Math.random() * (2000)) + 500;
-        setTimeout(() => {
-            if (delay > 2000) {
-                reject('Connection timeout');
-            } else {
-                resolve(`Here is your data from ${url}`)
-            }
-        }, delay)
-    })
-}
+// const fakeRequestPromise = (url) => {
+//     return new Promise((resolve, reject) => {
+//         const delay = Math.floor(Math.random() * (2000)) + 500;
+//         setTimeout(() => {
+//             if (delay > 2000) {
+//                 reject('Connection timeout');
+//             } else {
+//                 resolve(`Here is your data from ${url}`)
+//             }
+//         }, delay)
+//     })
+// }
 
-async function makeTwoRequests() {
+// async function makeTwoRequests() {
+//     try {
+//         let data1 = await fakeRequestPromise('books.com/page1')
+//         console.log(data1)
+//         let data2 = await fakeRequestPromise('books.com/page2')
+//         console.log(data2)
+//     }
+//     catch (error) {
+//         console.log('An Error Occured:', error)
+//     }
+// }
+
+// makeTwoRequests();
+
+//==================================================================================
+
+// const obj = {
+//     dog: 'Alice',
+//     age: 22,
+//     isAdmin: true,
+//     isHere: null,
+// };
+
+// const toJson = JSON.stringify(obj);
+// console.log(toJson);
+
+// const data = `{
+// "lat": 33.44,
+//     "lon": -94.04,
+//         "timezone": "America/Chicago",
+//             "timezone_offset": -18000}`
+
+// const parsedData = JSON.parse(data);
+
+// // console.log(parsedData.timezone);
+
+// const myObject = {
+//     name: 'Andrew',
+//     age: 24,
+//     isAdmin: true,
+//     title: undefined
+// };
+
+// console.log(myObject);
+
+// const parsedObject = JSON.stringify(myObject);
+
+// console.log(parsedObject);
+
+// =====OLD CLUNKY WAY TO GET API Requests (don't need to remember it!) ======
+
+// "https://swapi.dev/api/people/1" <==== here our API endpoint
+
+// const request = new XMLHttpRequest;
+
+// request.onload = function () {
+//     console.log('It loaded!')
+//     const data = JSON.parse(this.responseText)
+//     console.log(data.name);
+// }
+
+// request.onerror = function () {
+//     console.log('Error!')
+//     console.log(this)
+// }
+
+// request.open("GET", "https://swapi.dev/api/people/1")
+// request.send();
+
+// ====== NEWER, FUNCIER WAY, TO GET API. FETCH API =======================
+
+// fetch("https://swapi.dev/api/people/1")
+//     .then((response) => {
+//         return response.json(); /// <=== also return PROMISe, so need one more .then()!
+//     })
+//     .then((data) => {
+//         console.log(data)
+//         return fetch("https://swapi.dev/api/people/2")
+//     })
+//     .then((response2) => {
+//         return response2.json();
+//     })
+//     .then((data2) => {
+//         console.log(data2)
+//     })
+//     .catch(error => {
+//         console.log('Error!', error)
+//     });
+
+// Doing FETCH API, using async / await function
+
+// const loadStarWarsPeople = async () => {
+//     try {
+//         const response = await fetch("https://swapi.dev/api/peoplesdddsa/1")
+//         const data = await response.json();
+//         console.log(data);
+//         const response2 = await fetch("https://swapi.dev/api/people/2")
+//         const data2 = await response2.json();
+//         console.log(data2)
+//     }
+//     catch (error) {
+//         console.log(error)
+//     }
+// };
+
+// loadStarWarsPeople();
+
+/// ==== Getting (FETCH API) API using AXIOS library (Github - Axios) ====
+
+// axios.get("https://swapi.dev/api/people/1")
+//     .then((response) => {
+//         console.log(response)
+//     })
+//     .catch((error) => {
+//         console.log(error)
+//     })
+
+// === Using axios library in async / await function ======
+
+// const getStarWarsPersons = async () => {
+//     const response = await axios.get("https://swapi.dev/api/people/1")
+//     console.log(response.data)
+// };
+
+// getStarWarsPersons();
+
+// === A little bit of refactoring, using persons ID ====
+
+// const getPersonName = async (personId) => {
+//     const response = await axios.get(`https://swapi.dev/api/people/${personId}`)
+//     console.log(response.data)
+// }
+
+// getPersonName(5);
+// getPersonName(10);
+
+// === Setting Headers with axios library (using dad joke API) ====
+
+const jokes = document.querySelector("#jokes");
+const button = document.querySelector('button');
+
+const addNewJoke = async () => {
+    const jokeText = await getDadJoke();
+    console.log(jokeText);
+    const newLi = document.createElement('li');
+    newLi.append(jokeText);
+    jokes.append(newLi);
+};
+
+button.addEventListener('click', addNewJoke)
+
+const getDadJoke = async () => {
     try {
-        let data1 = await fakeRequestPromise('books.com/page1')
-        console.log(data1)
-        let data2 = await fakeRequestPromise('books.com/page2')
-        console.log(data2)
+        const configuration = { headers: { Accept: "application/json" } };
+        const response = await axios.get("https://icanhazdadjoke.com/", configuration)
+        return response.data.joke
     }
     catch (error) {
-        console.log('An Error Occured:', error)
+        return "Sorry, no new jokes available!"
     }
-}
+};
 
-makeTwoRequests();
+getDadJoke();
+
+
 
