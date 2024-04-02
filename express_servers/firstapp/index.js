@@ -6,7 +6,7 @@ const app = express();
 // })
 
 app.get('/', (req, res) => {
-    res.send('Welcome to a home page!')
+    res.send('Welcome to a home page! Yahooo! Yuppiii!')
 })
 
 app.get('/dogs', (req, res) => {
@@ -22,6 +22,11 @@ app.get('/r/:subpath/:postID', (req, res) => { // subpath = 'chickens'
     const postId = req.params.postID
     console.log(req.params);
     res.send(`<h1>Post with ${postId} to a ${subtheme} theme`);
+})
+
+app.get('/search', (req, res) => {
+    console.log(req.query);
+    res.send('Hello');
 })
 
 app.listen(3000, () => {
