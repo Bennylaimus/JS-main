@@ -2,14 +2,21 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const allData = require('./data.json');
-console.log(allData);
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 
 
-app.get('/reddit', (req, res) => {
-    res.render('home.ejs');
+app.get('/r/:subreddit', (req, res) => {
+    const subtheme = req.params.subreddit
+    const data = allData[subtheme];
+    if (data) {
+        res.render('home.ejs', { ...data }); // now he have in {} { name, subscriber, description ..} and ALL of the object 'Chickens', so in ejs we can use just one specific variable, like 'name'
+    } else {
+        res.render('nodata.ejs', { subtheme });
+    }
+
+    console.log(data);
 });
 
 
