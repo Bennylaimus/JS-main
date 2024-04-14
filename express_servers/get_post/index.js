@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
+// uuidv4(); // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
@@ -39,18 +41,22 @@ app.post('/tacos', (req, res) => {
 
 const comments = [
     {
+        id: uuidv4(),
         username: 'Toddy',
         comment: 'Lol, so funny!',
     },
     {
+        id: uuidv4(),
         username: 'Sk8terBoi',
         comment: 'I love to skate!',
     },
     {
+        id: uuidv4(),
         username: 'Skylare',
         comment: 'Look, what I did yesterday!',
     },
     {
+        id: uuidv4(),
         username: 'Andzei',
         comment: 'Holalal, I am Mr. Andzei!',
     },
@@ -70,11 +76,22 @@ app.get('/comments/new', (req, res) => {
 
 app.post('/comments', (req, res) => {
     const { username, comment } = req.body // Destructuring 2 items from Object (username & comment)
-    comments.push({ username, comment }); // Adding a new comment with  user name to comments just with .push
+    id = uuidv4(); // or {username, comment, id: uudiv4()}
+    comments.push({ username, comment, id }); // Adding a new comment with  user name to comments just with .push
     res.redirect('/comments');
 });
 
 // After a new comment is created, we need to redirect user to the /comment page, where all the comments (including a new, created comment) are shown, using Express res.redirect() method for it! (doing this in above code)
+
+// Creating a 4th Route, which leads to specific post - id, and will allow us to see a specific user's post ID.
+
+app.get('/comments/:id', (req, res) => {
+    const { id } = req.params; // Using Object destructing here
+    const commentId = comments.find(c => c.id === id);
+    // console.log(commentId) // в commentId храниться весь объект c (commentId = c)
+    res.render('comments/singlecomment.ejs', { commentId });
+});
+
 
 
 
