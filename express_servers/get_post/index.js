@@ -62,18 +62,22 @@ const comments = [
     },
 ];
 
+// Index  /comments          GET - Display all comments
 app.get('/comments', (req, res) => {
     res.render('comments/index.ejs', { comments });
 });
 
+
 // Creating a 2nd Route - where we can create and post a new comment
 
+// New    /comments          GET - Form to create new comment
 app.get('/comments/new', (req, res) => {
     res.render('comments/new.ejs');   // comment is GET'ed on the same comments/new route, but want to create a separate Route for it, so it is POST'ed somewhere!
 });
 
 // Creating 3rd Route for POST'ing a new comment (according REST template above)
 
+// Create /comments          POST - Creates new comment on server
 app.post('/comments', (req, res) => {
     const { username, comment } = req.body // Destructuring 2 items from Object (username & comment)
     id = uuidv4(); // or {username, comment, id: uudiv4()}
@@ -85,12 +89,32 @@ app.post('/comments', (req, res) => {
 
 // Creating a 4th Route, which leads to specific post - id, and will allow us to see a specific user's post ID.
 
+// Show   /comments/:id      GET - Details for one specific comment
 app.get('/comments/:id', (req, res) => {
     const { id } = req.params; // Using Object destructing here
     const commentId = comments.find(c => c.id === id);
     // console.log(commentId) // в commentId храниться весь объект c (commentId = c)
     res.render('comments/singlecomment.ejs', { commentId });
 });
+
+// Creatinf a 5th Route, - updating an existing, specific comment with PATCH
+
+// Update /comments/:id -    PATCH - Updates  specific comment on server
+app.patch('/comments/:id', (req, res) => {
+    // console.log(req.body);
+    const newComment = req.body.newCom // updatedComment is name='updatedComment'
+
+    // console.log(req.params);
+    const { id } = req.params; // 1) we need to takes that specific id
+
+    const commentId = comments.find(c => c.id === id); // 2) we need to fing a specific comment, that id is reffering to
+
+    commentId.comment = newComment
+    res.redirect('/comments');
+    // console.log(commentId.comment);
+    // 3) then we need to update this comment (commentId.comment) with something we send in a request body (req.body)
+});
+
 
 
 
