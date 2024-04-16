@@ -3,12 +3,14 @@ const app = express();
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 // uuidv4(); // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
+const methodOverride = require('method-override');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(methodOverride('_method'));
 
 app.listen(3000, () => {
     console.log('Listen on port 3000');
@@ -102,7 +104,7 @@ app.get('/comments/:id', (req, res) => {
 // Update /comments/:id -    PATCH - Updates  specific comment on server
 app.patch('/comments/:id', (req, res) => {
     // console.log(req.body);
-    const newComment = req.body.newCom // updatedComment is name='updatedComment'
+    const newComment = req.body.comment // updatedComment is name='updatedComment'
 
     // console.log(req.params);
     const { id } = req.params; // 1) we need to takes that specific id
@@ -115,6 +117,15 @@ app.patch('/comments/:id', (req, res) => {
     // 3) then we need to update this comment (commentId.comment) with something we send in a request body (req.body)
 });
 
+// Creating 6th Route 'Edit' (creating a form to submit an edit information GET a form)
+
+//Edit   /comments/:id/edit GET - Form to edit specific comment
+
+app.get('/comments/:id/edit', (req, res) => {
+    const { id } = req.params; // or req.params.id
+    const commentId = comments.find(c => c.id === id);
+    res.render('comments/edit.ejs', { commentId });
+});
 
 
 
