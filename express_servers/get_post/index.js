@@ -41,7 +41,7 @@ app.post('/tacos', (req, res) => {
 
 // Starting with a 1st Route /comments (imitating a data base with list of comments)
 
-const comments = [
+let comments = [
     {
         id: uuidv4(),
         username: 'Toddy',
@@ -125,6 +125,17 @@ app.get('/comments/:id/edit', (req, res) => {
     const { id } = req.params; // or req.params.id
     const commentId = comments.find(c => c.id === id);
     res.render('comments/edit.ejs', { commentId });
+});
+
+// Creating 7th Route, to DELETE a specific - single comment
+
+// Delete /comments/:id -    DELETE - Deletes specific item on server
+
+app.delete('/comments/:id', (req, res) => {
+    const { id } = req.params;
+    // const commentId = comments.find(c => c.id === id);
+    comments = comments.filter(c => c.id !== id); // creating a new, filtered array, which does not include an item(comment) we deleted
+    res.redirect('/comments');
 });
 
 
