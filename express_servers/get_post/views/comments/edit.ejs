@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h1>Edit your comment here:</h1>
+    <h1>Edit your comment here:</h1> /comments/:id
     <form method="POST" action="/comments/<%=commentId.id%>?_method=PATCH">
         <textarea name="comment" id="" cols="30" rows="10">
         <%=commentId.comment%>
