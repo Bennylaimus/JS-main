@@ -99,7 +99,7 @@ app.get('/comments/:id', (req, res) => {
     res.render('comments/singlecomment.ejs', { commentId });
 });
 
-// Creatinf a 5th Route, - updating an existing, specific comment with PATCH
+// Creating a 5th Route, - updating an existing, specific comment with PATCH
 
 // Update /comments/:id -    PATCH - Updates  specific comment on server
 app.patch('/comments/:id', (req, res) => {
