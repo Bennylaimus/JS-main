@@ -1,0 +1,14 @@
+1. Main Page (containing all the comment):
+GET | /comments | (load main page with all the comments) | display all comments.
+
+I am progger - Andrew
+Add new comment ==> 
+
+2. Redirected to a new page with form
+GET | /comments/form | (will display form page)
+
+3. On the form page we are submitting form and POSTing (adding) comment to a comments list on /comments
+POST | /comments/:id | (will add new comment with specific id)
+
+==============================================================
+
