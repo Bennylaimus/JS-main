@@ -1,5 +1,5 @@
 1. Main Page (containing all the comment):
-GET | /comments | (load main page with all the comments) | display all comments.
+GET | /comments/mainpage | (load main page with all the comments) | display all comments.
 
 I am progger - Andrew
 Add new comment ==> 
@@ -8,7 +8,10 @@ Add new comment ==>
 GET | /comments/form | (will display form page)
 
 3. On the form page we are submitting form and POSTing (adding) comment to a comments list on /comments
-POST | /comments/:id | (will add new comment with specific id)
+POST | /comments | (will add new comment with specific id)
 
 ==============================================================
+
+4. On the mainpage we want to have an 'Edit' button next to each comment, so that ONE SPECIFIC comment can be edited
+PATCH | /comments/:id | redirects us a page where this one specific comment is displayed (in a textarea), we can edit it and submit back
 

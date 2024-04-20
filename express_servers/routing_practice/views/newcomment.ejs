@@ -9,10 +9,10 @@
 
 <body>
     <h1>Create your new comment here and post it!</h1>
-    <form method="POST" action="/comments/form">
-        <label for="username"></label>
-        <input type="text" name="username">
-        <label for="comment"></label>
+    <form method="POST" action="/comments/mainpage">
+        <label for="username">Enter a username</label>
+        <input type="text" id="username" name="username">
+        <label for="comment">Enter a comment</label>
         <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
         <button>Add Comment</button>
     </form>

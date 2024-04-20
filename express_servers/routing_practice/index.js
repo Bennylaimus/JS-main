@@ -26,7 +26,7 @@ app.use(express.json());
 
 //Fake database:
 
-allComments = [
+let allComments = [
     {
         comment: "I am the greatest programmerrrrr!",
         username: "Hackerrr",
@@ -49,12 +49,13 @@ allComments = [
     },
 ];
 
+'6a690a3d-03d2-4a08-8a64-967d3834beaa'
+
 // ========================================================
 
 // 1st step of routing.txt:
 app.get('/comments/mainpage', (req, res) => {
-    console.log(allComments);
-    res.render('mainpage.ejs');
+    res.render('mainpage.ejs', { allComments });
 });
 
 // 2nd step of routing.txt:
@@ -63,10 +64,15 @@ app.get('/comments/form', (req, res) => {
 });
 
 // 3rd step of routing.txt:
-app.post('/comments/form', (req, res) => {
+app.post('/comments/mainpage', (req, res) => {
     allComments.id = uuidv4();
     const { comment, username, id } = req.body
     allComments.push({ comment, username, id });
     res.redirect('/comments/mainpage');
+});
+
+app.get('/comments/:id', (req, res) => { // Edit ==> /comments/:
+    const uniqueId = req.params.id;
+    res.render('editcomment.ejs', { uniqueId });
 });
 
