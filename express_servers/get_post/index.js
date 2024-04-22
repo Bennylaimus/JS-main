@@ -104,7 +104,7 @@ app.get('/comments/:id', (req, res) => {
 // Update /comments/:id -    PATCH - Updates  specific comment on server
 app.patch('/comments/:id', (req, res) => {
     // console.log(req.body);
-    const newComment = req.body.comment // updatedComment is name='updatedComment'
+    const newComment = req.body.comment // req.body.comment is name='comment' from the <form>
 
     // console.log(req.params);
     const { id } = req.params; // 1) we need to takes that specific id
