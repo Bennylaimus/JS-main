@@ -75,19 +75,27 @@ app.post('/comments/mainpage', (req, res) => {
     res.redirect('/comments/mainpage');
 });
 
-app.get('/comments/:id', (req, res) => { // Edit ==> /comments/:
+app.get('/comments/:id', (req, res) => {
     const uniqueId = req.params.id;
-    // console.log(uniqueId);
     const uniqueComment = allComments.find(singleComment => singleComment.id === uniqueId);
     res.render('editcomment.ejs', { uniqueId, uniqueComment });
 });
 
 app.patch('comments/:id', (req, res) => {
+    const newComment = req.body.comment;
     const uniqueId = req.params.id;
     console.log(uniqueId);
-    const newComment = req.body.comment;
-    const uniqueComment = allComments.find(singleComment => singleComment.id = uniqueId);
+    const uniqueComment = allComments.find(singleComment => singleComment.id === uniqueId);
     uniqueComment.comment = newComment
     res.redirect('/comments/mainpage');
 });
+
+// {
+//     comment: "I like Pizzzzas",
+//     username: "PizzaHut",
+//     id: uuidv4(),
+// },
+
+// d672ba86-7fe2-45eb-989b-7716aa828645
+// d672ba86-7fe2-45eb-989b-7716aa828645
 
