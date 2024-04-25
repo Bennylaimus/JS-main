@@ -1,13 +1,11 @@
 const express = require('express');
+const methodOverride = require('method-override');
 const app = express();
 
 const path = require('path');
 
 const { v4: uuidv4 } = require('uuid');
 uuidv4();
-
-const methodOverride = require('method-override');
-
 //======================================
 
 app.listen(3000, (req, res) => {
@@ -21,9 +19,10 @@ app.get('/', (req, res) => {
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
+app.use(methodOverride('_method'));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(methodOverride('_method'));
 
 //=======================================
 
@@ -75,18 +74,25 @@ app.post('/comments/mainpage', (req, res) => {
     res.redirect('/comments/mainpage');
 });
 
+// 4th step of routing.txt
 app.get('/comments/:id', (req, res) => {
+    const uniqueId = req.params.id;
+    const uniqueComment = allComments.find(singleComment => singleComment.id === uniqueId);
+    res.render('yourcomment.ejs', { uniqueId, uniqueComment });
+});
+
+// 4th step - 2nd part ==> transfering (GETing) Edit page:
+app.get('/comments/:id/edit', (req, res) => {
     const uniqueId = req.params.id;
     const uniqueComment = allComments.find(singleComment => singleComment.id === uniqueId);
     res.render('editcomment.ejs', { uniqueId, uniqueComment });
 });
 
 app.patch('comments/:id', (req, res) => {
-    const newComment = req.body.comment;
     const uniqueId = req.params.id;
-    console.log(uniqueId);
+    const yourComment = req.body.comment;
     const uniqueComment = allComments.find(singleComment => singleComment.id === uniqueId);
-    uniqueComment.comment = newComment
+    uniqueComment.comment = yourComment
     res.redirect('/comments/mainpage');
 });
 
