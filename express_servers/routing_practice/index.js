@@ -1,28 +1,37 @@
 const express = require('express');
-const methodOverride = require('method-override');
 const app = express();
 
 const path = require('path');
 
 const { v4: uuidv4 } = require('uuid');
 uuidv4();
+
+const methodOverride = require('method-override');
+
+app.set('view engine', 'ejs');
+app.set('views', 'views');
+app.set('views', path.join(__dirname, '/views'));
+
+app.use(methodOverride('_method'));
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+
 //======================================
 
 app.listen(3000, (req, res) => {
     console.log('Listen On Port 3000');
 });
 
+app.use(function (req, res) {
+    console.log('Any request');
+    next();
+});
+
 app.get('/', (req, res) => {
     res.send('This is main page')
 });
-
-app.set('view engine', 'ejs');
-app.set('views', 'views');
-
-app.use(methodOverride('_method'));
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
 //=======================================
 
@@ -51,7 +60,7 @@ let allComments = [
     },
 ];
 
-'6a690a3d-03d2-4a08-8a64-967d3834beaa'
+// '6a690a3d-03d2-4a08-8a64-967d3834beaa'
 
 // ========================================================
 
@@ -70,7 +79,6 @@ app.post('/comments/mainpage', (req, res) => {
     const { comment, username } = req.body
     id = uuidv4();
     allComments.push({ comment, username, id });
-    console.log(req.body.comment);
     res.redirect('/comments/mainpage');
 });
 
@@ -88,12 +96,15 @@ app.get('/comments/:id/edit', (req, res) => {
     res.render('editcomment.ejs', { uniqueId, uniqueComment });
 });
 
-app.patch('comments/:id', (req, res) => {
-    const uniqueId = req.params.id;
-    const yourComment = req.body.comment;
-    const uniqueComment = allComments.find(singleComment => singleComment.id === uniqueId);
-    uniqueComment.comment = yourComment
-    res.redirect('/comments/mainpage');
+app.patch('comments/:id/edit', (req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.write('Patch OK');
+    res.end();
+    // const uniqueId = req.params.id;
+    // const editedComment = req.body.comment;
+    // const uniqueComment = allComments.find(singleComment => singleComment.id === uniqueId);
+    // uniqueComment.comment = editedComment
+    // res.redirect('/comments/mainpage');
 });
 
 // {

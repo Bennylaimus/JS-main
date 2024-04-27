@@ -13,9 +13,9 @@
 
     <h2>Edit your comment</h2>
 
-    <form method="POST" action="/comments/<%=uniqueId%>?_method=PATCH">
-        <label for=" comment">Edit Comment</label>
-        <textarea name="comment" id="" cols="30" rows="10"><%=uniqueComment.comment%></textarea>
+    <form method="POST" action="/comments/<%=uniqueId%>/edit?_method=PATCH">
+        <label for="comment">Edit Comment</label>
+        <textarea name="comment" id="comment" cols="30" rows="10"><%=uniqueComment.comment%></textarea>
         <button>Edit</button>
     </form>
     <a href="/comments/mainpage">Back to all comments</a>
