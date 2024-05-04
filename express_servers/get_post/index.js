@@ -103,6 +103,7 @@ app.get('/comments/:id', (req, res) => {
 
 // Update /comments/:id -    PATCH - Updates  specific comment on server
 app.patch('/comments/:id', (req, res) => {
+    console.log('PATCH');
     // console.log(req.body);
     const newComment = req.body.comment // req.body.comment is name='comment' from the <form>
 
