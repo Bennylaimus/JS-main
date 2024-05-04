@@ -15,10 +15,12 @@ POST | /comments | (will add new comment with specific id)
 4. Now, we want to have a separate page to which we can navigate using "show comment" link, and on this page we observe and Edit one specifi comment.
 GET | /comments/:id | redirects us to a separate page with specifc comment.
 
-
-
-
-
-4. On the mainpage we want to have an 'Edit' button next to each comment, so that ONE SPECIFIC comment can be edited
+5. On the mainpage we want to have an 'Edit' button next to each comment, so that ONE SPECIFIC comment can be edited
 PATCH | /comments/:id | redirects us a page where this one specific comment is displayed (in a textarea), we can edit it and submit back
+
+===============================================================
+
+6. To DELETE a specific comment on the mainpage we want to have a DELETE button next to a specific comment. Will use. .delete method to delete specific comment.
+(will use Colt's option and delete comment on a separate /comments/:id page via DELETE button)
+
 

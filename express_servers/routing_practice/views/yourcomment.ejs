@@ -19,6 +19,9 @@
 
     <a href="/comments/mainpage">Back to all comments</a>
     <a href="/comments/<%=uniqueId%>/edit">Edit Comment</a>
+    <form method="POST" action="/comments/<%=uniqueId%>?_method=DELETE">
+        <button>Delete a comment</button>
+    </form>
 </body>
 
 </html>

@@ -24,11 +24,6 @@ app.listen(3000, (req, res) => {
     console.log('Listen On Port 3000');
 });
 
-app.use(function (req, res) {
-    console.log('Any request');
-    next();
-});
-
 app.get('/', (req, res) => {
     res.send('This is main page')
 });
@@ -96,23 +91,22 @@ app.get('/comments/:id/edit', (req, res) => {
     res.render('editcomment.ejs', { uniqueId, uniqueComment });
 });
 
-app.patch('comments/:id/edit', (req, res) => {
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    res.write('Patch OK');
-    res.end();
-    // const uniqueId = req.params.id;
-    // const editedComment = req.body.comment;
-    // const uniqueComment = allComments.find(singleComment => singleComment.id === uniqueId);
-    // uniqueComment.comment = editedComment
-    // res.redirect('/comments/mainpage');
+// 5th step of routing.txt (updating a comment via PATCH)
+app.patch('/comments/:id/edit', (req, res) => {
+    const uniqueId = req.params.id;
+    const editedComment = req.body.comment;
+    const uniqueComment = allComments.find(singleComment => singleComment.id === uniqueId);
+    uniqueComment.comment = editedComment
+    res.redirect('/comments/mainpage');
 });
 
-// {
-//     comment: "I like Pizzzzas",
-//     username: "PizzaHut",
-//     id: uuidv4(),
-// },
+// 6th step of routing.txt (deleting a specific comment with .delete)
+app.delete('/comments/:id', (req, res) => {
+    const uniqueId = req.params.id
+    allComments = allComments.filter(singleComment => singleComment.id !== uniqueId);
+    res.redirect('/comments/mainpage');
+});
 
-// d672ba86-7fe2-45eb-989b-7716aa828645
-// d672ba86-7fe2-45eb-989b-7716aa828645
+
+
 
