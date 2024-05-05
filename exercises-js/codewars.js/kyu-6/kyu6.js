@@ -51,30 +51,27 @@
 const allPhotos = [20, 37, 20, 21, 3, 8, 9, 20, 20]; // output if number = 1 should be 20, 37, 21
 const repeats = 2;
 
-// console.log(deleteNth(allPhotos, repeats));
-
-// Solution - sozdavatj novij array!!!!!!!!, dobavljatj v nego vse chisla, krome teh, kotorije ne udovletvorjajut trebovaniju (count == number)
 
 function deleteNth(arr, number) {
 
     let count = 0;
-    let filteredArr = [];
+    let arrIndex = 1
+    let filteredArr = [arr[0]];
 
     // [20, 37, 20, 21, 3, 8, 9, 20, 20]
 
-    filteredArr = arr.forEach(element => {
-        for (let i = 1; i < arr.length; i++) {
-            if (element == arr[i]) {
-                count++
-                if (count != number) {
-                    filteredArr.push(element);
-                }
-            }
+    // filteredArr = [20, 37, 20,]
+
+    arr.forEach(element => {                                   // 20       
+        if (filteredArr.includes(element)) {                   // true  
+            count++                                            // count 1
         }
-        console.log(filteredArr);
-    });
+        if (count <= number) {
+            filteredArr.push(arr[arrIndex]);                   // [20, 37, 20]
+        }
+        arrIndex++                                             // arrIndex = 3
+    })
+    return filteredArr
 };
 
-deleteNth(allPhotos, repeats);
-
-// 1. Solution - use .filter method, insted of forEach? .find method?
+console.log(deleteNth(allPhotos, repeats));
