@@ -1,0 +1,14 @@
+1. Clear a screeen: "Ctrl + L"
+2. Look at the present database: "db" (like pwd)
+3. Show an existing collections: "show collections"
+
+
+================================================
+Inserting:
+1. db.dogs.insertOne({...}) - a JS object can be inserted ('dogs' - name of the collection)
+
+2. db.dogs.find()
+
+Remark: "_id" <== 'primary key!' (it should be unique for every collections' document(item))
+
+3. db.dogs.insertMany() - ecspects an array of documents is passend in [...]
