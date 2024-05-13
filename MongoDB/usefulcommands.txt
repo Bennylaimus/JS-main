@@ -1,6 +1,7 @@
 1. Clear a screeen: "Ctrl + L"
 2. Look at the present database: "db" (like pwd)
 3. Show an existing collections: "show collections"
+4. Switch between DBs ('enter' in some specific DB): "use firstDB"
 
 
 ================================================
@@ -12,3 +13,38 @@ Inserting:
 Remark: "_id" <== 'primary key!' (it should be unique for every collections' document(item))
 
 3. db.dogs.insertMany() - ecspects an array of documents is passend in [...]
+
+==================================================
+Reading data back (quering):
+
+1. db.cats.find() - finds all
+2. db.cats.find({name: 'Blue Steel'}) - find specific document (return a cursor)
+3. db.cats.findOne({isFrendly: true}) - find and return only one matching (return only the first one matcing)
+==================================================
+Updating data:
+$set: $currentDate: (localTime: true) set to true!
+
+1. db.cats.updateOne({name: "Bekky"}, {$set: {age: 8}}) finding specific document and updating age in stis specific document.
+
+2. db.cats.updateOne({name: "Bekky"}, {$set: {color: 'white'}}) - will add a new property in a document color: 'white'
+
+3. db.cats.updateMany({isFrendly: true}, {$set: {isAvailable: false}}) - will add / update ALL matcing documents (documents, matches 'isFrendly')
+
+4. db.cats.replaceOne() - we can replace ALL the information of one document (but keep it's original ID)
+
+5. db.cats.updateOne({name: "Stewi"}, {$set: {age: 6}, $currentDate: {localTime: true}}) - update one document and show time when this specific update was processed!
+
+======================================================
+Deleting data:
+
+1. db.cats.deleteOne({name: "Blue Steel"}) - will delete one specific DOCUMENT, found based on creteria name: "Blue Steel"
+
+2. db.dogs.deleteMany({isAvailable: false}) - will delete ALL document found based on criteria isAvailable: false
+
+3. db.dogs.deleteMany({}) - will delete all 'dogs' COLLECTION 
+=====================================================
+
+
+
+
+
