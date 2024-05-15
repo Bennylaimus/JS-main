@@ -43,6 +43,29 @@ Deleting data:
 
 3. db.dogs.deleteMany({}) - will delete all 'dogs' COLLECTION 
 =====================================================
+Finding nested data:
+
+1. Find nested document: db.dogs.find({'personality.childFriendly': true}) - finds document matching childFriendly: true and if childFriendly is nested in personality:
+=====================================================
+Operators (can be found in docs: Server => References => Operators):
+
+1. $gt (greater then) db.dogs.find({age: {$gt 5}}); (greater then 5, but not including 5), to include 5 use:
+
+2. $gte (greater then & equal)
+
+3. $in (find something specific in an array[])
+db.dogs.find({breed: {$in: ['Corgi', 'Labrador']}}) - will find many. will find at one go all documents based on following 'breed' 'Corgi' & 'Labrador'
+
+****Operators can be combined!***
+
+4. db.dogs.find({breed: {$in: ['Corgi', 'Labrador']}, age: {$lt: 5}})
+
+5. $ne, $nin
+
+6. $or, $and etc.
+=========================================================
+
+
 
 
 
