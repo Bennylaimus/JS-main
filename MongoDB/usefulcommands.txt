@@ -64,6 +64,16 @@ db.dogs.find({breed: {$in: ['Corgi', 'Labrador']}}) - will find many. will find 
 
 6. $or, $and etc.
 =========================================================
+MONGOOSE:
+1. creating a Schema: const KittensSchema = new mongoose.Schema({})
+2. creating a model: const Kitten = new mongoose.model('Kitten', KittensSchema)
+ - 'Kitten' - will be 'transformed' into 'kittens' collection
+3. const betty = new Kitten({name: betty, age: 5, childFriendly: true})
+ - instance 'betty' created in the 'kittens' collection (but not yet added to the MongoDB)
+
+via Node.js:
+1. .load Kitten.js (Kitten.js file from VSC)
+2. betty.save() - will save 'betty' in the 'kittnes' collection and it will be visiable it the MongoDB vie mongosh
 
 
 

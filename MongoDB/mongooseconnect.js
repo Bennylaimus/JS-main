@@ -34,3 +34,12 @@ const amadeus = new Movie({ title: 'Amadeus', year: 1986, score: 9.2, rating: 'R
 // amadeus ==> will dispaly a new created instance of Movie collection
 // amadeus.save()
 
+const KittensSchema = new mongoose.Schema({
+    name: String,
+    age: Number,
+    childFriendly: Boolean
+});
+
+const Kitten = new mongoose.model('Kitten', KittensSchema);
+
+const betty = new Kitten({ name: 'Betty', age: 5, childFriendly: true });
