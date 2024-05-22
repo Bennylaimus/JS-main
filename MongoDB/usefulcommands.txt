@@ -75,6 +75,12 @@ via Node.js:
 1. .load Kitten.js (Kitten.js file from VSC)
 2. betty.save() - will save 'betty' in the 'kittnes' collection and it will be visiable it the MongoDB vie mongosh
 
+==========================================================================================================
+// Query concept!
+Quare is a '.thenable' objects, but the are not a full - fledged (полноценные) Promises!
+We can use .then after Movie.find({}).then(data => console.log(data)), for example, but Movie.find return '.thenable' object! Not a full-fledged Promises
+==========================================================================================================
+
 
 
 
