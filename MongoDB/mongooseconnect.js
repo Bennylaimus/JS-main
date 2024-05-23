@@ -17,7 +17,7 @@ const movieSchema = new mongoose.Schema({
     rating: String
 });
 
-// Making a Model:
+// // Making a Model:
 const Movie = mongoose.model('Movie', movieSchema);
 // 1. Makes us a class 'Movie'
 // !!! This Movie class becomes a 'movies' collection in 'movieApp' DB
@@ -118,7 +118,10 @@ Movie.insertMany([
 // });
 
 // const Kitten = mongoose.model('Kitten', KittensSchema);
-// const betty = new Kitten({ name: 'Betty', age: 5, childFriendly: true });
+// // const betty = new Kitten({ name: 'Betty', age: 5, childFriendly: true });
+
+// const peggy = new Kitten({ name: 'Peggy', age: 5, childFriendly: true });
+// peggy.save().then(data => console.log(data));
 // ====================================================================================================
 
 

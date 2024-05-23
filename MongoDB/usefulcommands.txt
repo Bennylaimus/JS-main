@@ -80,7 +80,20 @@ via Node.js:
 Quare is a '.thenable' objects, but the are not a full - fledged (полноценные) Promises!
 We can use .then after Movie.find({}).then(data => console.log(data)), for example, but Movie.find return '.thenable' object! Not a full-fledged Promises
 ==========================================================================================================
+Some Model CRUD commands:
 
+1. Model.find()
+2. Model.findOne()
+3. Model.findById()
+
+1. Model.updateOne()
+2. Model.updateMany()
+3. Model.findOneAndUpdate() (yo get a new Object with an updated line we need to add an option: {new: true})
+
+1. Model.deleteOne
+2. Model.deleteMany
+3. Model.findOneAndDelete()
+4. Model.findOneByIdAndDelete()
 
 
 
