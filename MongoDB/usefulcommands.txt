@@ -95,6 +95,32 @@ Some Model CRUD commands:
 3. Model.findOneAndDelete()
 4. Model.findOneByIdAndDelete()
 
+//========================================================================================================
+VALIDATIONS:
+ - type,
+ - default,
+ - maxLegth,
+ - min [0, 'Negative number!'] (errors validations)
+ etc.
+ // ======================================================================================================
+ METHODS!
+  - 'General' methods (applies to a model) (Product.insertOne())
+  - 'Instance' methods (appliecs to a specific instance / document) (Bekky.save())
+  We can create and add our own methods (functions) to an instance / document
+  
+  Syntax: 
+   - someSchema.methods.greet = fucntion() {
+    console.log('Hello!')
+   }
+
+ - Should be defined BEFORE model?????
+ - Or should be .load with all the data?????
+
+
+ 
+
+
+
 
 
 
