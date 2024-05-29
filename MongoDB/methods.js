@@ -26,6 +26,8 @@ const dogsSchema = new mongoose.Schema({
     }
 })
 
+// instance methods:
+
 dogsSchema.methods.greet = function () {
     console.log('Woof, woof, woof!')
     console.log(`Said ${this.name}`)
@@ -35,6 +37,16 @@ dogsSchema.methods.toggleToFriendly = function () {
     this.childFriendly = !this.childFriendly
     return this.save() // (.save 'thenable', so we can return this 'Promise' and await it)
 }
+
+// instance methods:
+
+// static methods:
+dogsSchema.statics.updateAge = function () {
+    return Dog.updateMany({}, { age: 3, childFriendly: true }) //can use .this.updateMany
+};
+// Dog.updateMany will work only on 'Dog' collection / class
+// .this.updateMany will apply to any collection / class it is used: 'Dog', 'Cat', 'Birds' etc.
+
 
 const Dog = mongoose.model('Dog', dogsSchema);
 
@@ -47,6 +59,8 @@ const findDoggy = async function () {
 };
 
 findDoggy();
+
+Dog.updateAge().then(response => console.log(response));
 
 // Dog.insertMany([
 //     { name: 'Bekky', age: 3 },

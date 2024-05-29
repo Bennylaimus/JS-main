@@ -104,7 +104,7 @@ VALIDATIONS:
  etc.
  // ======================================================================================================
  METHODS!
-  - 'General' methods (applies to a model) (Product.insertOne())
+  - 'General / Static' methods (applies to a model) (Product.insertOne())
   - 'Instance' methods (appliecs to a specific instance / document) (Bekky.save())
   We can create and add our own methods (functions) to an instance / document
   
@@ -115,6 +115,13 @@ VALIDATIONS:
 
  - Should be defined BEFORE model?????
  - Or should be .load with all the data?????
+
+// Static methods (model methods)
+ Syntax:
+  - someSchema.statics.greeting = function() {
+    console.log('Greetings!')
+  }
+  - .this refers to a model class itself
 
 
  
