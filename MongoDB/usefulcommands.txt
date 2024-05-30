@@ -122,6 +122,22 @@ VALIDATIONS:
     console.log('Greetings!')
   }
   - .this refers to a model class itself
+// ===============================================================================================
+Mongoose Middleware:
+
+Syndax:
+ - someSchema.pre('save', async function(){
+  await doSomething
+  await doSomethingMore
+ })
+
+ - someSchema.post('save' async function(){
+  await doSomethingAfter.pre
+  await doSomethingMoreAfter.pre
+ })
+//================================================================================================
+
+
 
 
  

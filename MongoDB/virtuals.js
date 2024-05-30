@@ -18,5 +18,15 @@ personsSchema.virtual('fullName').get(function () {
     return `${this.firstName} ${this.lastName}`
 });
 
+personsSchema.pre('save', async function () {
+    this.firstName = 'Dodo'
+    this.lastName = 'Daboi'
+    console.log('Pre save console message')
+});
+
+personsSchema.post('save', async function () {
+    console.log('Post saved console message')
+});
+
 const Person = mongoose.model('Person', personsSchema);
 
