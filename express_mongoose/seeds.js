@@ -55,8 +55,16 @@ const seedsProducts = [
 ];
 
 // Now we inserting a whole array with insert many!
-// INPORTANT! ALL array items should pass a validation!
-// If not nothing will be inserted! (check some methods / middleware) to change this!
+// IMPORTANT! ALL array items should pass a validation!
+// If not - nothing will be inserted! (check some methods / middleware) to change this!
+// Product.insertMany(seedsProducts)
+//     .then(data => {
+//         console.log(data)
+//     })
+//     .catch(error => {
+//         console.log(error)
+//     });
+
 Product.insertMany(seedsProducts)
     .then(data => {
         console.log(data)

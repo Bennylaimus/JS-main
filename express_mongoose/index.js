@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 
 const mongoose = require('mongoose');
-const Product = require('./models/products'); // requiring a 'Product' model, that we created and exposted in models/product file.
+const Product = require('./models/products'); // requiring a 'Product' model, that we created and exported in models/product file.
 
 
 
@@ -21,11 +21,18 @@ mongoose.connect('mongodb://127.0.0.1:27017/FarmProducts')
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.get('/test', (req, res) => {
-    res.send('Test worked')
-});
-
 app.listen(3000, () => {
     console.log('App listening on port 3000')
 });
 
+app.get('/products', async (req, res) => {
+    const productsList = await Product.find({})
+    res.render('products/productslist.ejs', { productsList });
+});
+
+app.get('/products/:id', async (req, res) => {
+    const { id } = req.params
+    const foundProduct = await Product.findById(id) // if you want to find by name for example - you can use findOne({...}) and set finding parameters
+    console.log(foundProduct);
+    res.render('products/productdetails.ejs', { foundProduct })
+});

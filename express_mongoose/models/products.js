@@ -10,7 +10,7 @@ const productSchema = new mongoose.Schema({
         reqiured: true,
         min: 0
     },
-    catigory: {
+    category: {
         type: String,
         lowercase: true,
         enum: ['fruit', 'vegetable', 'dairy']
@@ -19,7 +19,7 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model('Product', productSchema);
 
-module.exports = Product; // expostiing a model to use it somewhere else
+module.exports = Product; // exporting a model to use it somewhere else
 
 
 
