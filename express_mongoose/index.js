@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const methodOverride = require('method-override');
 
 const mongoose = require('mongoose');
 const Product = require('./models/products'); // requiring a 'Product' model, that we created and exported in models/product file.
@@ -20,7 +21,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/FarmProducts')
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(express.urlencoded({ extended: true })) // method for accesing req.body send using POST method in the submit form
+
+app.use(express.urlencoded({ extended: true })); // method for accesing req.body send using POST method in the submit form
+app.use(methodOverride('_method'));
 
 app.listen(3000, () => {
     console.log('App listening on port 3000')
@@ -47,5 +50,20 @@ app.get('/products/:id', async (req, res) => {
     console.log(foundProduct);
     res.render('products/productdetails.ejs', { foundProduct })
 });
+
+// GETing prepapulated form (form prepapulated with product info, using 'value')
+app.get('/products/:id/edit', async (req, res) => {
+    const { id } = req.params
+    const product = await Product.findById(id)
+    res.render('products/edit.ejs', { product })
+});
+
+//Now UPDATING getted, prepopulated form usinf PUT method
+app.put('/products/:id', async (req, res) => {
+    const { id } = req.params
+    const product = await Product.findByIdAndUpdate(id, req.body, { runValidators: true, new: true })
+    res.redirect(`/products/${product._id}`)
+});
+
 
 
