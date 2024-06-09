@@ -1,0 +1,22 @@
+ == Solving selected 'category' options: ==
+ == 1st approach - hardcode and check with ternary 'if' each of the category inside ejs file:
+    <select name="category" id="category"><option value="fruit" <%=product.category==='fruit' ? 'selected' : '' %>>fruit</option>
+        <option value="vegetable" <%=product.category==='vegetable' ? 'selected' : '' %> >vegetable</option>
+    <option value="dairy" <%=product.category==='dairy' ? 'selected' : '' %>>dairy</option>
+    </select>
+
+ == 2nd approach (we use in the code) - create a loop insede js file: 
+
+1. Hardcode categories array in index.js file:
+   const categories = ['fruit', 'vegetable', 'dairy'];
+
+2. add 'categories' in express for ejs {products, categories}
+
+3. ejs syntax to dinamically create options, check is product category matched with some category and dispaly / create / edit it dinamically
+
+<select name="category" id="category">
+
+<% for(let category of categories) { %>
+<option value="<%=category%>" <%=product.category===category ? 'selected' : '' %>><%=category%></option><% } %>
+
+</select>

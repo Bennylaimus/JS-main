@@ -29,13 +29,21 @@ app.listen(3000, () => {
     console.log('App listening on port 3000')
 });
 
+const categories = ['fruit', 'vegetable', 'dairy'];
+
 app.get('/products', async (req, res) => {
-    const productsList = await Product.find({})
-    res.render('products/productslist.ejs', { productsList });
+    const { category } = req.query
+    if (category) {
+        const product = await Product.find({ category })
+        res.render('products/productslist.ejs', { product })
+    } else {
+        const product = await Product.find({})
+        res.render('products/productslist.ejs', { product });
+    }
 });
 
 app.get('/products/new', (req, res) => {
-    res.render('products/new.ejs')
+    res.render('products/new.ejs', { categories })
 });
 
 app.post('/products', async (req, res) => {
@@ -46,16 +54,15 @@ app.post('/products', async (req, res) => {
 
 app.get('/products/:id', async (req, res) => {
     const { id } = req.params
-    const foundProduct = await Product.findById(id) // if you want to find by name for example - you can use findOne({...}) and set finding parameters
-    console.log(foundProduct);
-    res.render('products/productdetails.ejs', { foundProduct })
+    const product = await Product.findById(id) // if you want to find by name for example - you can use findOne({...}) and set finding parameters
+    res.render('products/productdetails.ejs', { product })
 });
 
 // GETing prepapulated form (form prepapulated with product info, using 'value')
 app.get('/products/:id/edit', async (req, res) => {
     const { id } = req.params
     const product = await Product.findById(id)
-    res.render('products/edit.ejs', { product })
+    res.render('products/edit.ejs', { product, categories });
 });
 
 //Now UPDATING getted, prepopulated form usinf PUT method
@@ -63,6 +70,12 @@ app.put('/products/:id', async (req, res) => {
     const { id } = req.params
     const product = await Product.findByIdAndUpdate(id, req.body, { runValidators: true, new: true })
     res.redirect(`/products/${product._id}`)
+});
+
+app.delete('/products/:id', async (req, res) => {
+    const { id } = req.params
+    const deletedProduct = await Product.findByIdAndDelete(id)
+    res.redirect('/products')
 });
 
 

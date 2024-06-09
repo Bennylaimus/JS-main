@@ -65,5 +65,3 @@ Product.insertMany(seedsProducts)
     .catch(error => {
         console.log(error)
     });
-
-
